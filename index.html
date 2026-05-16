@@ -1135,11 +1135,113 @@ body.light .full-menu-link { color:rgba(0,0,0,.3); }
 <!-- ============================================================ -->
 <div id="toolsPage" class="page-section">
 <div class="wrap" style="margin-top:85px;">
-  <div class="section-title" style="margin-bottom:20px;"><i class="fas fa-fire"></i> Elite Tools</div>
-  <!-- Plugins inject here directly -->
-  <div id="toolsPluginZone" style="display:flex;flex-direction:column;gap:20px;"></div>
-  <div id="toolsContainer"></div>
+
+  <div class="sec-label reveal" style="margin-bottom:6px;">Utilities</div>
+  <div class="sec-h reveal" style="margin-bottom:4px;">Elite Tools 🛠️</div>
+  <p style="font-size:.82rem;opacity:.42;margin-bottom:22px;line-height:1.6;" class="reveal">
+    Premium tools powered by real APIs — no signup needed.
+  </p>
+
+  <!-- Tool Cards Grid -->
+  <div id="toolCardsGrid" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(155px,1fr));gap:12px;">
+    <!-- Populated by JS -->
+  </div>
+
+  <!-- Hidden plugin zone — plugins inject here but don't show inline -->
+  <div id="toolsPluginZone" style="display:none;"></div>
+  <div id="toolsContainer" style="display:none;"></div>
+
 </div>
+</div>
+
+<!-- ================================================================
+     TOOL MODAL — fullscreen drawer
+================================================================ -->
+<div id="toolModal" style="
+  position:fixed;inset:0;z-index:9500;
+  display:none;flex-direction:column;
+  background:rgba(5,5,5,.96);backdrop-filter:blur(28px);
+  overflow-y:auto;
+  animation:toolModalIn .3s cubic-bezier(.4,0,.2,1);
+">
+<style>
+@keyframes toolModalIn{from{opacity:0;transform:translateY(24px);}to{opacity:1;transform:translateY(0);}}
+@keyframes toolCardPop{from{opacity:0;transform:translateY(18px) scale(.97);}to{opacity:1;transform:translateY(0) scale(1);}}
+
+.tool-card{
+  background:rgba(255,255,255,.04);
+  border:1.5px solid rgba(255,215,0,.1);
+  border-radius:20px;padding:20px 16px;
+  cursor:none;transition:all .28s;
+  text-align:center;position:relative;overflow:hidden;
+  animation:toolCardPop .38s cubic-bezier(.4,0,.2,1) both;
+}
+.tool-card::before{
+  content:'';position:absolute;top:0;left:0;right:0;height:2px;
+  background:linear-gradient(90deg,var(--fire1),var(--gold),transparent);
+  opacity:0;transition:opacity .28s;
+}
+.tool-card:hover{
+  border-color:rgba(255,215,0,.38);
+  transform:translateY(-5px);
+  box-shadow:0 16px 36px rgba(255,102,0,.12);
+  background:rgba(255,215,0,.06);
+}
+.tool-card:hover::before{opacity:1;}
+.tool-card .tc-icon{font-size:2.2rem;margin-bottom:10px;display:block;line-height:1;}
+.tool-card .tc-name{font-weight:800;font-size:.88rem;color:var(--text);margin-bottom:4px;font-family:'Syne',sans-serif;}
+.tool-card .tc-desc{font-size:.65rem;opacity:.42;line-height:1.5;color:var(--text);}
+.tool-card .tc-badge{
+  position:absolute;top:10px;right:10px;
+  background:linear-gradient(135deg,var(--fire1),var(--fire2));
+  color:#000;font-size:.55rem;font-weight:900;
+  padding:2px 7px;border-radius:6px;letter-spacing:.5px;
+}
+
+.tool-modal-header{
+  display:flex;align-items:center;gap:12px;
+  padding:14px 18px;
+  background:rgba(255,255,255,.03);
+  border-bottom:1px solid rgba(255,215,0,.1);
+  position:sticky;top:0;z-index:10;
+  backdrop-filter:blur(20px);
+}
+.tool-modal-back{
+  width:40px;height:40px;border-radius:12px;display:flex;align-items:center;justify-content:center;
+  background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);
+  cursor:none;font-size:1rem;color:var(--text);transition:all .22s;flex-shrink:0;
+}
+.tool-modal-back:hover{background:rgba(255,215,0,.1);border-color:var(--gold);color:var(--gold);}
+.tool-modal-title{font-family:'Syne',sans-serif;font-weight:800;font-size:1.05rem;color:var(--gold);}
+.tool-modal-sub{font-size:.65rem;opacity:.4;margin-top:1px;}
+.tool-modal-body{padding:18px 18px 60px;max-width:600px;margin:0 auto;width:100%;}
+</style>
+
+  <!-- Header -->
+  <div class="tool-modal-header">
+    <div class="tool-modal-back" onclick="closeTool()">
+      <i class="fas fa-arrow-left"></i>
+    </div>
+    <div>
+      <div class="tool-modal-title" id="toolModalTitle">Tool</div>
+      <div class="tool-modal-sub" id="toolModalSub">Loading...</div>
+    </div>
+    <div style="margin-left:auto;">
+      <div style="
+        background:linear-gradient(135deg,var(--fire1),var(--fire2));
+        color:#000;font-size:.6rem;font-weight:900;
+        padding:4px 10px;border-radius:8px;letter-spacing:.5px;
+      ">FREE</div>
+    </div>
+  </div>
+
+  <!-- Content -->
+  <div class="tool-modal-body" id="toolModalBody">
+    <div style="text-align:center;padding:40px 0;opacity:.4;">
+      <div style="width:36px;height:36px;border:3px solid var(--gold);border-top-color:transparent;border-radius:50%;animation:spin 1s linear infinite;margin:0 auto 12px;"></div>
+      <p style="font-size:.85rem;">Loading tool...</p>
+    </div>
+  </div>
 </div>
 
 <!-- ============================================================ -->
@@ -1187,24 +1289,22 @@ body.light .full-menu-link { color:rgba(0,0,0,.3); }
     </button>
   </div>
 
-  <div class="footer" style="margin-top:20px;text-align:center;">
-    <i class="fas fa-fire"></i> ELITE PROFILE • SAIF BABY  <i class="fas fa-crown"></i>
-  </div>
+    <div class="footer site-footer" style="margin-top:20px;text-align:center;">
+      <div class="footer-main"><i class="fas fa-fire"></i> Elite Profile &bull; Saif Baby <i class="fas fa-crown"></i></div>
+      <div class="footer-copy">© 2025 Mohammad Saiful Islam — All rights reserved</div>
+    </div>
 </div>
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script>
 // ===== PRELOADER =====
-let preloaderHidden=false;
-function hidePreloader(){
-  if(preloaderHidden)return;
-  preloaderHidden=true;
-  const p=document.getElementById('preloader');
-  if(p){p.classList.add('hide');setTimeout(()=>p.style.display='none',700);}
-}
-window.addEventListener('load',()=>setTimeout(hidePreloader,1800));
-setTimeout(hidePreloader,3500);
+window.addEventListener('load',()=>{
+  setTimeout(()=>{
+    const p=document.getElementById('preloader');
+    if(p){p.classList.add('hide');setTimeout(()=>p.style.display='none',700);}
+  },1800);
+});
 
 // ===== CUSTOM CURSOR =====
 const cursorDot=document.getElementById('cursorDot');
@@ -1230,7 +1330,12 @@ function closeFullMenu(){
   const b=document.getElementById('hamburgerBtn');
   if(m){m.classList.remove('open');b&&b.classList.remove('open');}
 }
-document.addEventListener('keydown',e=>{if(e.key==='Escape')closeFullMenu();});
+document.addEventListener('keydown',e=>{
+  if(e.key==='Escape'){
+    if(document.getElementById('toolModal').style.display==='flex') closeTool();
+    else closeFullMenu();
+  }
+});
 
 // ===== CONFIG =====
 const ADMIN_CREDENTIALS = { email:"saifmorse04@gmail.com", password:"saiful@1" };
@@ -1362,26 +1467,117 @@ function switchPage(page,el){
   document.querySelectorAll('.dropdown-item').forEach(i=>i.classList.remove('active'));
   document.getElementById(page+'Page').classList.add('active');
   if(el)el.classList.add('active');
-  closeMenu();
-  if(page==='tools')setTimeout(loadToolsPage,100);
+  closeMenu();closeFullMenu();
+  window.scrollTo({top:0,behavior:'smooth'});
+  if(page==='tools')setTimeout(()=>{loadToolsPage();initScrollReveal();},80);
   if(page==='home'){setTimeout(initScrollReveal,100);setTimeout(animateSkillBars,200);}
 }
 
+// ================================================================
+//  TOOLS — Card Grid + Modal System
+// ================================================================
+
+// Tool definitions
+const TOOLS = [
+  { id:'saif-gemini-box',    icon:'🤖', name:'Gemini AI',       desc:'Chat with Google Gemini AI',       badge:'AI'   },
+  { id:'saif-fbinfo-box',    icon:'🔍', name:'FB Spy',          desc:'Facebook user info & avatar',       badge:'FB'   },
+  { id:'saif-dl-box',        icon:'📥', name:'Downloader',      desc:'YouTube, FB, TikTok, Insta',        badge:'HOT'  },
+  { id:'saif-weather-box',   icon:'🌤️', name:'Weather',         desc:'Live weather by city',              badge:''     },
+  { id:'saif-lyrics-box',    icon:'🎵', name:'Lyrics',          desc:'Search any song lyrics',            badge:''     },
+  { id:'saif-currency-box',  icon:'💱', name:'Currency',        desc:'Real-time currency converter',      badge:''     },
+  { id:'saif-qr-box',        icon:'📷', name:'QR Code',         desc:'Generate or read QR codes',         badge:''     },
+  { id:'saif-text-box',      icon:'📝', name:'Text Tools',      desc:'Case, count, encode & more',        badge:''     },
+  { id:'saif-age-box',       icon:'🎂', name:'Age Calc',        desc:'Calculate exact age',               badge:''     },
+  { id:'saif-dict-box',      icon:'📖', name:'Dictionary',      desc:'English word definitions',          badge:''     },
+  { id:'saif-enhance-box',   icon:'✨', name:'AI Enhancer',     desc:'Enhance images with AI',            badge:'AI'   },
+];
+
+let activeToolId = null;
+
 function loadToolsPage(){
-  const zone=document.getElementById('toolsPluginZone');
-  const container=document.getElementById('toolsContainer');
-  const ids=['saif-gemini-box','saif-fbinfo-box','saif-dl-box','saif-weather-box','saif-lyrics-box','saif-currency-box','saif-qr-box','saif-text-box','saif-age-box','saif-dict-box','saif-enhance-box'];
-  const boxes=ids.map(id=>document.getElementById(id)).filter(Boolean);
-  if(boxes.length===0&&(!zone||zone.children.length<=1)){
-    if(container)container.innerHTML='<p style="text-align:center;opacity:0.55;color:var(--text);padding:40px;font-size:0.9rem;">No tools loaded. Check saif/manifest.json</p>';
-    return;
-  }
-  if(container)container.innerHTML='';
-  boxes.forEach(box=>{box.style.marginTop='0';zone.appendChild(box);});
+  const grid = document.getElementById('toolCardsGrid');
+  if(!grid) return;
+
+  // Ensure plugins are loaded first
+  const zone = document.getElementById('toolsPluginZone');
+
+  // Build card grid
+  grid.innerHTML = TOOLS.map((t,i) => `
+    <div class="tool-card" onclick="openTool('${t.id}')"
+      style="animation-delay:${i*0.05}s;">
+      ${t.badge ? `<div class="tc-badge">${t.badge}</div>` : ''}
+      <span class="tc-icon">${t.icon}</span>
+      <div class="tc-name">${t.name}</div>
+      <div class="tc-desc">${t.desc}</div>
+    </div>
+  `).join('');
 }
 
-window.__saifPluginAnchor=null;
-function getSaifPluginAnchor(){return document.getElementById('toolsPluginZone');}
+function openTool(id){
+  const tool = TOOLS.find(t=>t.id===id);
+  if(!tool) return;
+
+  activeToolId = id;
+
+  // Set modal header
+  document.getElementById('toolModalTitle').textContent = tool.icon+' '+tool.name;
+  document.getElementById('toolModalSub').textContent   = tool.desc;
+
+  // Show modal
+  const modal = document.getElementById('toolModal');
+  modal.style.display = 'flex';
+  document.body.style.overflow = 'hidden';
+
+  // Load plugin box into modal
+  const body = document.getElementById('toolModalBody');
+  const el   = document.getElementById(id);
+
+  if(el){
+    body.innerHTML = '';
+    body.appendChild(el);
+    el.style.display = 'block';
+    el.style.marginTop = '0';
+  } else {
+    body.innerHTML = `
+      <div style="text-align:center;padding:40px 0;opacity:.4;">
+        <p style="font-size:2rem;margin-bottom:10px;">${tool.icon}</p>
+        <p style="font-size:.88rem;font-weight:700;">${tool.name}</p>
+        <p style="font-size:.75rem;margin-top:6px;">Plugin loading... check manifest.json</p>
+      </div>
+    `;
+  }
+
+  if(typeof logUserActivity==='function' && currentUser)
+    logUserActivity(currentUser, 'used_tool_'+tool.name.toLowerCase().replace(/\s/g,'_'));
+}
+
+function closeTool(){
+  const modal = document.getElementById('toolModal');
+  const body  = document.getElementById('toolModalBody');
+  const el    = activeToolId ? document.getElementById(activeToolId) : null;
+
+  // Move plugin back to hidden zone
+  if(el){
+    const zone = document.getElementById('toolsPluginZone');
+    if(zone){ el.style.display='none'; zone.appendChild(el); }
+  }
+
+  modal.style.display = 'none';
+  document.body.style.overflow = '';
+  activeToolId = null;
+}
+
+// Swipe down to close modal on mobile
+let touchStartY = 0;
+document.addEventListener('touchstart', e=>{
+  if(document.getElementById('toolModal').style.display==='flex')
+    touchStartY = e.touches[0].clientY;
+});
+document.addEventListener('touchend', e=>{
+  if(document.getElementById('toolModal').style.display!=='flex') return;
+  const diff = e.changedTouches[0].clientY - touchStartY;
+  if(diff > 80) closeTool(); // swipe down 80px = close
+});
 
 // ===== HAMBURGER =====
 function toggleMenu(){document.getElementById('dropdownMenu').classList.toggle('open');}
@@ -1858,7 +2054,6 @@ function sendContactMessage(){
 // ===== EVENT LISTENERS =====
 setInterval(()=>{if(isAdminLoggedIn&&adminSession)localStorage.setItem('adminSession',JSON.stringify(adminSession));},60000);
 window.addEventListener('beforeunload',()=>{if(currentUser)db.ref('users/'+encodeURIComponent(currentUser)).update({online:false});});
-</script>
 
 <!-- PLUGIN ANCHOR OVERRIDE — redirect all plugins to tools page -->
 <script>
