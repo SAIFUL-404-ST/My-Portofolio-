@@ -3,17 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Mohammad Saiful Islam | Elite Portfolio</title>
-<meta name="description" content="Official portfolio of Mohammad Saiful Islam. مشاريع, skills, projects and contact information.">
-<meta name="keywords" content="Saiful Islam, portfolio, web developer, Bangladesh, Saif portfolio">
-<meta name="author" content="Mohammad Saiful Islam">
-<!-- Google Verification -->
-<meta name="google-site-verification" content="RJ5EEsrbYiFtqAoLU3fAgyhPdINqQg7m57TOY-MmeOQ" />
-
-<!-- PWA Manifest -->
-<link rel="manifest" href="manifest.json">
-<meta name="theme-color" content="#ffd700">
-<link rel="apple-touch-icon" href="icon-192.png">
+<title>Mohammad Saiful Islam | Elite Profile</title>
 
 <script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-database-compat.js"></script>
@@ -143,7 +133,9 @@ body.light .glow-blob { opacity:0.05; }
 @keyframes shine { to { background-position:200% center; } }
 
 /* ===== LEFT SIDE CONTROLS ===== */
-.left-controls { display:flex; flex-direction:row; gap:8px; align-items:center; }
+.left-controls {
+  display:flex; flex-direction:column; gap:10px; align-items:center;
+}
 .ctrl-btn {
   width:42px; height:42px; border-radius:14px;
   display:flex; align-items:center; justify-content:center;
@@ -308,7 +300,6 @@ textarea { resize:vertical; }
   box-shadow:0 40px 120px rgba(0,0,0,0.9), 0 0 0 1px rgba(255,215,0,0.1), 0 0 60px rgba(255,102,0,0.05) inset;
   position:relative; backdrop-filter:blur(20px); border:1px solid rgba(255,215,0,0.12);
   overflow:hidden;
-  transition: transform 0.1s ease-out; /* for 3D tilt */
 }
 /* Fire top line flicker */
 .card::before {
@@ -334,6 +325,7 @@ textarea { resize:vertical; }
   width:100%; height:100%; object-fit:cover; display:block;
   filter:brightness(0.75) saturate(1.2);
 }
+/* Fire overlay on cover */
 .card-cover::after {
   content:''; position:absolute; inset:0;
   background:linear-gradient(to bottom,rgba(255,80,0,0.15),rgba(8,8,8,0.85));
@@ -502,77 +494,152 @@ body.light h1 {
 .dl-btn { width:100%; padding:13px; border-radius:13px; border:none; background:linear-gradient(135deg,var(--fire1),var(--fire2)); color:#000; font-weight:900; cursor:pointer; font-size:0.92rem; letter-spacing:0.5px; transition:all 0.3s; font-family:'Outfit',sans-serif; }
 .dl-btn:hover { transform:translateY(-3px); box-shadow:0 10px 25px rgba(255,102,0,0.5); }
 
-/* ===== LIVE CHAT (Guestbook) ===== */
-.live-chat-btn {
-  position:fixed; bottom:30px; right:30px;
-  width:56px; height:56px; border-radius:50%;
-  background:linear-gradient(135deg,var(--fire1),var(--gold));
-  color:#000; display:flex; align-items:center; justify-content:center;
-  font-size:1.4rem; box-shadow:0 8px 25px rgba(255,102,0,0.5);
-  z-index:999; cursor:pointer; transition:transform 0.3s;
-}
-.live-chat-btn:hover { transform:scale(1.1); }
-.chat-popup {
-  position:fixed; bottom:100px; right:30px;
-  width:340px; max-height:480px;
-  background:var(--card-bg); border-radius:20px;
-  border:1.5px solid rgba(255,215,0,0.3);
-  backdrop-filter:blur(24px); z-index:998;
-  display:flex; flex-direction:column;
-  box-shadow:0 20px 50px rgba(0,0,0,0.8);
-  animation:menuSlide 0.3s ease;
-  overflow:hidden;
-}
-.chat-header {
-  padding:16px; border-bottom:1px solid rgba(255,215,0,0.15);
-  font-weight:900; color:var(--gold); display:flex; justify-content:space-between; align-items:center;
-}
-.chat-messages {
-  flex:1; overflow-y:auto; padding:14px; display:flex; flex-direction:column; gap:12px;
-  max-height:320px; background:var(--panel-bg);
-}
-.chat-msg {
-  background:var(--info-bg); padding:10px 14px; border-radius:14px;
-  font-size:0.82rem; border:1px solid var(--info-border);
-}
-.chat-msg .name { font-weight:900; color:var(--gold); font-size:0.75rem; margin-bottom:4px; }
-.chat-input {
-  display:flex; gap:8px; padding:12px; border-top:1px solid rgba(255,215,0,0.15);
-}
-.chat-input input { flex:1; margin:0; padding:10px; border-radius:10px; }
-.chat-input button { padding:10px 16px; border-radius:10px; background:var(--fire1); color:#000; font-weight:900; border:none; cursor:pointer; }
+/* ===== CUSTOM CURSOR ===== */
+body { cursor:none; }
+.cursor-dot { position:fixed; width:7px; height:7px; background:var(--gold); border-radius:50%; pointer-events:none; z-index:999999; transform:translate(-50%,-50%); transition:transform .08s; }
+.cursor-ring { position:fixed; width:34px; height:34px; border:1.5px solid rgba(255,215,0,.5); border-radius:50%; pointer-events:none; z-index:999998; transform:translate(-50%,-50%); transition:width .18s,height .18s,border-color .18s; }
+.cursor-ring.hov { width:50px; height:50px; border-color:var(--gold); }
+@media(hover:none){ .cursor-dot,.cursor-ring{display:none;} body{cursor:auto;} }
 
-/* ===== PROJECTS PAGE ===== */
-.projects-grid {
-  display:grid; grid-template-columns:repeat(auto-fit,minmax(250px,1fr)); gap:16px;
-  margin-top:20px;
-}
-.project-card {
-  background:var(--card-bg); border-radius:20px; padding:18px;
-  border:1px solid rgba(255,215,0,0.12); backdrop-filter:blur(12px);
-  transition:all 0.3s;
-}
-.project-card:hover { transform:translateY(-5px); border-color:var(--gold); }
-.project-card h3 { color:var(--gold); margin-bottom:6px; }
-.project-card p { font-size:0.8rem; opacity:0.8; margin-bottom:12px; }
-.project-card a { color:var(--gold); text-decoration:none; font-weight:700; font-size:0.8rem; }
+/* ===== PRELOADER ===== */
+#preloader { position:fixed; inset:0; background:var(--bg); z-index:999997; display:flex; align-items:center; justify-content:center; flex-direction:column; gap:22px; transition:opacity .6s,visibility .6s; }
+#preloader.hide { opacity:0; visibility:hidden; pointer-events:none; }
+.pre-logo { font-family:'Syne',sans-serif; font-size:2.5rem; font-weight:800; background:linear-gradient(90deg,var(--fire1),var(--gold),var(--fire1)); background-size:200% auto; -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text; animation:shine 1.4s linear infinite; }
+.pre-bar { width:200px; height:2px; background:rgba(255,215,0,.1); border-radius:2px; overflow:hidden; }
+.pre-fill { height:100%; background:linear-gradient(90deg,var(--fire1),var(--gold)); animation:preLoad 1.7s cubic-bezier(.4,0,.2,1) forwards; }
+@keyframes preLoad { from{width:0} to{width:100%} }
 
-/* ===== RESPONSIVE ===== */
-@media (max-width:768px) {
-  .admin-container { border:none; }
-  .admin-content { grid-template-columns:1fr; padding:16px; }
-  .admin-header { padding:16px; flex-direction:column; gap:10px; }
-  .admin-nav { padding:12px 16px; }
-  .wrap { margin:90px auto 50px; padding:14px; }
-  .card { padding:44px 16px 30px; border-radius:28px; }
-  .grid { grid-template-columns:1fr; }
-  .panel { width:100%; }
-  .chat-popup { width:90vw; right:5vw; }
-}
+/* ===== EMERGENCY BANNER ===== */
+.emergency-banner { display:none; position:fixed; top:64px; left:0; right:0; z-index:890; background:linear-gradient(135deg,#ff416c,#ff4b2b); padding:10px 20px; align-items:center; justify-content:center; gap:10px; animation:eBanner 1.5s ease-in-out infinite alternate; }
+.emergency-banner.active { display:flex; }
+@keyframes eBanner { from{box-shadow:0 4px 20px rgba(255,65,108,.4);} to{box-shadow:0 4px 40px rgba(255,65,108,.8);} }
+.emergency-banner p { color:#fff; font-weight:900; font-size:.88rem; margin:0; }
+.close-banner { background:rgba(255,255,255,.2); border:none; color:#fff; width:26px; height:26px; border-radius:50%; cursor:none; font-size:.8rem; display:flex; align-items:center; justify-content:center; flex-shrink:0; }
+
+/* ===== FULLSCREEN MENU ===== */
+.full-menu { position:fixed; inset:0; z-index:850; background:rgba(5,5,5,.97); backdrop-filter:blur(28px); display:flex; flex-direction:column; align-items:center; justify-content:center; gap:8px; opacity:0; visibility:hidden; transition:opacity .3s,visibility .3s; }
+body.light .full-menu { background:rgba(245,245,240,.97); }
+.full-menu.open { opacity:1; visibility:visible; }
+.full-menu-link { font-family:'Syne',sans-serif; font-size:clamp(2rem,6vw,2.8rem); font-weight:800; cursor:none; color:rgba(255,255,255,.3); transition:color .2s,transform .2s; display:flex; align-items:center; gap:18px; padding:10px 24px; text-decoration:none; }
+body.light .full-menu-link { color:rgba(0,0,0,.3); }
+.full-menu-link:hover { color:var(--gold); transform:translateX(10px); }
+.menu-num { font-family:monospace; font-size:.9rem; font-weight:400; opacity:.35; }
+.menu-sep { width:1px; height:48px; background:rgba(255,215,0,.1); }
+.hbars span { display:block; width:18px; height:1.5px; background:var(--gold); border-radius:1px; transition:all .28s; }
+.hbars { display:flex; flex-direction:column; gap:5px; }
+.hamburger-btn.open .hbars span:nth-child(1) { transform:rotate(45deg) translate(4.5px,4.5px); }
+.hamburger-btn.open .hbars span:nth-child(2) { opacity:0; }
+.hamburger-btn.open .hbars span:nth-child(3) { transform:rotate(-45deg) translate(4.5px,-4.5px); }
+
+/* ===== TYPING ===== */
+.typing-wrap { font-size:.9rem; color:var(--gold); font-weight:700; margin:4px 0 14px; min-height:1.5em; }
+.t-cursor { display:inline-block; width:2px; height:.85em; background:var(--gold); animation:tBlink .7s infinite; vertical-align:middle; margin-left:2px; border-radius:1px; }
+@keyframes tBlink { 0%,100%{opacity:1} 50%{opacity:0} }
+
+/* ===== VIP BADGE ===== */
+.vip-badge { display:inline-flex; align-items:center; gap:6px; background:linear-gradient(135deg,#ffd700,#ff9900); color:#000; padding:5px 16px; border-radius:24px; font-size:.68rem; font-weight:900; margin:5px 0; box-shadow:0 0 20px rgba(255,215,0,.4); animation:vipPulse 2s ease-in-out infinite alternate; }
+@keyframes vipPulse { from{box-shadow:0 0 10px rgba(255,215,0,.25);} to{box-shadow:0 0 28px rgba(255,215,0,.7);} }
+
+/* ===== HERO STATS ===== */
+.hero-stats { display:grid; grid-template-columns:repeat(3,1fr); gap:1px; background:rgba(255,215,0,.08); border-radius:16px; overflow:hidden; margin:16px 0; }
+.hstat { background:var(--card); padding:14px 10px; text-align:center; transition:background .25s; }
+.hstat:hover { background:rgba(255,215,0,.08); }
+.hstat-n { font-family:'Syne',sans-serif; font-size:1.55rem; font-weight:800; color:var(--gold); line-height:1; }
+.hstat-l { font-size:.6rem; opacity:.42; margin-top:5px; letter-spacing:1px; text-transform:uppercase; }
+
+/* ===== CTA BUTTONS ===== */
+.hero-ctas { display:flex; gap:10px; justify-content:center; flex-wrap:wrap; margin:14px 0 16px; }
+.cta-btn { padding:12px 24px; border-radius:13px; font-weight:700; font-size:.88rem; cursor:none; transition:all .25s; display:inline-flex; align-items:center; gap:8px; font-family:'Outfit',sans-serif; text-decoration:none; }
+.cta-fire { background:linear-gradient(135deg,var(--fire1),var(--fire2)); color:#000; box-shadow:0 6px 20px rgba(255,102,0,.3); }
+.cta-fire:hover { transform:translateY(-3px); box-shadow:0 12px 28px rgba(255,102,0,.5); }
+.cta-ghost { background:transparent; border:1.5px solid rgba(255,215,0,.35); color:var(--gold); }
+.cta-ghost:hover { background:rgba(255,215,0,.1); transform:translateY(-3px); }
+
+/* ===== SCROLL REVEAL ===== */
+.reveal { opacity:0; transform:translateY(26px); transition:opacity .65s ease,transform .65s ease; }
+.reveal.visible { opacity:1; transform:none; }
+
+/* ===== SKILLS ===== */
+.skills-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(130px,1fr)); gap:12px; }
+.skill-card { background:var(--info-bg); border:1px solid var(--info-border); border-radius:18px; padding:18px 14px; text-align:center; transition:all .3s; position:relative; overflow:hidden; }
+.skill-card::after { content:''; position:absolute; bottom:0; left:0; right:0; height:2px; background:linear-gradient(90deg,var(--fire1),var(--gold)); transform:scaleX(0); transition:transform .35s; transform-origin:left; }
+.skill-card:hover { border-color:rgba(255,215,0,.4); transform:translateY(-5px); box-shadow:0 14px 30px rgba(255,102,0,.1); }
+.skill-card:hover::after { transform:scaleX(1); }
+.sk-emoji { font-size:1.8rem; margin-bottom:8px; display:block; }
+.sk-name { font-size:.76rem; font-weight:700; margin-bottom:8px; }
+.sk-bar { height:3px; background:rgba(255,255,255,.07); border-radius:3px; overflow:hidden; }
+.sk-fill { height:100%; border-radius:3px; background:linear-gradient(90deg,var(--fire1),var(--gold)); width:0; transition:width 1.3s cubic-bezier(.4,0,.2,1); }
+
+/* ===== PROJECTS ===== */
+.proj-grid { display:grid; gap:14px; }
+.proj-card { background:var(--info-bg); border:1.5px solid var(--info-border); border-radius:20px; padding:20px; transition:all .3s; position:relative; overflow:hidden; }
+.proj-card::before { content:''; position:absolute; top:0; left:0; right:0; height:2px; background:linear-gradient(90deg,var(--fire1),var(--gold),transparent); opacity:0; transition:opacity .3s; }
+.proj-card:hover { border-color:rgba(255,215,0,.38); transform:translateY(-5px); box-shadow:0 20px 50px rgba(255,100,0,.1); }
+.proj-card:hover::before { opacity:1; }
+.proj-head { display:flex; justify-content:space-between; align-items:flex-start; gap:12px; margin-bottom:9px; }
+.proj-title { font-family:'Syne',sans-serif; font-size:1rem; font-weight:800; color:var(--gold); }
+.proj-btns { display:flex; gap:7px; flex-shrink:0; }
+.proj-btn { width:33px; height:33px; border-radius:9px; display:flex; align-items:center; justify-content:center; border:1px solid rgba(255,215,0,.2); background:rgba(255,215,0,.07); color:var(--gold); font-size:.85rem; transition:all .25s; text-decoration:none; cursor:none; }
+.proj-btn:hover { background:var(--gold); color:#000; transform:scale(1.1); }
+.proj-desc { font-size:.8rem; line-height:1.65; opacity:.72; margin-bottom:11px; color:var(--text); }
+.proj-tags { display:flex; gap:5px; flex-wrap:wrap; }
+.proj-tag { padding:3px 9px; border-radius:7px; font-size:.62rem; font-weight:700; background:rgba(255,215,0,.1); color:var(--gold); border:1px solid rgba(255,215,0,.2); }
+.proj-live { display:inline-flex; align-items:center; gap:5px; font-size:.63rem; font-weight:700; padding:3px 9px; border-radius:7px; margin-bottom:9px; background:rgba(37,211,102,.1); color:#25D366; border:1px solid rgba(37,211,102,.25); }
+.proj-live::before { content:''; width:6px; height:6px; border-radius:50%; background:#25D366; animation:liveDot 2s infinite; }
+@keyframes liveDot { 0%,100%{opacity:1} 50%{opacity:.3} }
+
+/* ===== MSG + USER CARDS (admin) ===== */
+.user-detail-card { background:rgba(255,215,0,.03); border:1.5px solid rgba(255,215,0,.1); border-radius:15px; padding:15px; margin-bottom:10px; transition:all .3s; }
+.user-detail-card:hover { border-color:rgba(255,215,0,.3); }
+.msg-card { background:rgba(255,255,255,.03); border:1px solid rgba(255,215,0,.08); border-radius:13px; padding:14px; margin-bottom:9px; position:relative; }
+.msg-unread { position:absolute; top:11px; right:11px; width:7px; height:7px; background:#ff416c; border-radius:50%; }
+.msg-name { font-weight:900; font-size:.88rem; color:var(--gold); margin-bottom:4px; }
+.msg-text { font-size:.8rem; opacity:.8; color:var(--text); line-height:1.5; margin-bottom:8px; }
+.msg-time { font-size:.63rem; opacity:.45; color:var(--text); }
+
+/* ===== TOOL CARDS + MODAL ===== */
+@keyframes toolCardIn { from{opacity:0;transform:translateY(16px) scale(.97);} to{opacity:1;transform:none;} }
+@keyframes modalIn { from{opacity:0;transform:translateY(20px);} to{opacity:1;transform:none;} }
+.tool-card { background:var(--info-bg); border:1.5px solid var(--info-border); border-radius:20px; padding:20px 16px; cursor:none; transition:all .28s; text-align:center; position:relative; overflow:hidden; animation:toolCardIn .38s both; }
+.tool-card::before { content:''; position:absolute; top:0; left:0; right:0; height:2px; background:linear-gradient(90deg,var(--fire1),var(--gold),transparent); opacity:0; transition:opacity .28s; }
+.tool-card:hover { border-color:rgba(255,215,0,.38); transform:translateY(-5px); box-shadow:0 16px 36px rgba(255,102,0,.12); background:rgba(255,215,0,.06); }
+.tool-card:hover::before { opacity:1; }
+.tc-icon { font-size:2.2rem; margin-bottom:10px; display:block; }
+.tc-name { font-weight:800; font-size:.88rem; color:var(--text); margin-bottom:4px; font-family:'Syne',sans-serif; }
+.tc-desc { font-size:.65rem; opacity:.42; line-height:1.5; color:var(--text); }
+.tc-badge { position:absolute; top:10px; right:10px; background:linear-gradient(135deg,var(--fire1),var(--fire2)); color:#000; font-size:.55rem; font-weight:900; padding:2px 7px; border-radius:6px; letter-spacing:.5px; }
+#toolModal { position:fixed; inset:0; z-index:9500; display:none; flex-direction:column; background:rgba(5,5,5,.96); backdrop-filter:blur(28px); overflow-y:auto; animation:modalIn .3s cubic-bezier(.4,0,.2,1); }
+.tmodal-hdr { display:flex; align-items:center; gap:12px; padding:14px 18px; background:rgba(255,255,255,.03); border-bottom:1px solid rgba(255,215,0,.1); position:sticky; top:0; z-index:10; backdrop-filter:blur(20px); }
+.tmodal-back { width:40px; height:40px; border-radius:12px; display:flex; align-items:center; justify-content:center; background:rgba(255,255,255,.06); border:1px solid rgba(255,255,255,.1); cursor:none; color:var(--text); transition:all .22s; flex-shrink:0; font-size:1rem; }
+.tmodal-back:hover { background:rgba(255,215,0,.1); border-color:var(--gold); color:var(--gold); }
+.tmodal-body { padding:18px 18px 60px; max-width:600px; margin:0 auto; width:100%; }
+
+/* ===== SECTION LABEL ===== */
+.sec-lbl { font-size:.68rem; color:var(--fire2); letter-spacing:2.5px; text-transform:uppercase; margin-bottom:6px; opacity:.75; display:block; }
+.sec-hd { font-family:'Syne',sans-serif; font-size:1.45rem; font-weight:800; margin-bottom:16px; }
+
+/* ===== SITE FOOTER ===== */
+.site-footer { margin-top:28px; padding:20px; background:var(--footer-bg); border:1px solid var(--footer-border); border-radius:16px; text-align:center; cursor:none; transition:all .25s; }
+.site-footer:hover { border-color:var(--gold); }
+.footer-main { font-size:.68rem; opacity:.45; font-weight:900; letter-spacing:2px; text-transform:uppercase; color:var(--text); }
+.footer-copy { font-size:.6rem; opacity:.25; margin-top:7px; color:var(--text); }
 </style>
 </head>
 <body>
-
+<!-- Cursor -->
+<div class="cursor-dot" id="cursorDot"></div>
+<div class="cursor-ring" id="cursorRing"></div>
+<!-- Preloader -->
+<div id="preloader">
+  <div class="pre-logo">SAIF ELITE</div>
+  <div class="pre-bar"><div class="pre-fill"></div></div>
+</div>
+<!-- Emergency Banner -->
+<div class="emergency-banner" id="emergencyBanner">
+  <i class="fas fa-exclamation-triangle" style="color:#fff;flex-shrink:0;"></i>
+  <p id="emergencyBannerText"></p>
+  <button class="close-banner" onclick="dismissBanner()"><i class="fas fa-times"></i></button>
+</div>
 <!-- Rain Canvas -->
 <canvas class="rain-canvas" id="rainCanvas"></canvas>
 
@@ -589,7 +656,8 @@ body.light h1 {
 
 <!-- ===== TOP NAV ===== -->
 <nav class="top-nav">
-  <div class="left-controls">
+  <!-- Left Controls -->
+  <div class="left-controls" style="flex-direction:row;gap:8px;">
     <div class="ctrl-btn admin-ctrl" onclick="openAdminPanel()" title="Admin">
       <i class="fas fa-crown" style="color:#ff9900;"></i>
       <div class="ctrl-badge" id="adminNotification">0</div>
@@ -605,14 +673,25 @@ body.light h1 {
     </div>
   </div>
 
-  <div class="nav-logo">ELITE SAIF</div>
+  <!-- Logo -->
+  <div class="nav-logo">SAIF ELITE</div>
 
-  <div class="hamburger-btn" onclick="toggleMenu()" id="hamburgerBtn">
-    <i class="fas fa-bars" style="color:var(--gold);"></i>
+  <!-- Right Hamburger -->
+  <div class="hamburger-btn" onclick="toggleFullMenu()" id="hamburgerBtn">
+    <div class="hbars"><span></span><span></span><span></span></div>
   </div>
 </nav>
 
-<!-- Dropdown Menu (added Projects) -->
+<!-- Fullscreen Menu -->
+<div class="full-menu" id="fullMenu">
+  <a class="full-menu-link" onclick="switchPage('home',null);closeFullMenu()"><span class="menu-num">01</span>Home</a>
+  <div class="menu-sep"></div>
+  <a class="full-menu-link" onclick="switchPage('tools',null);closeFullMenu()"><span class="menu-num">02</span>Tools</a>
+  <div class="menu-sep"></div>
+  <a class="full-menu-link" onclick="switchPage('contact',null);closeFullMenu()"><span class="menu-num">03</span>Contact</a>
+</div>
+
+<!-- Dropdown Menu -->
 <div class="dropdown-menu" id="dropdownMenu">
   <div class="dropdown-item active" id="menuHome" onclick="switchPage('home',this)">
     <i class="fas fa-user"></i> Home
@@ -620,9 +699,6 @@ body.light h1 {
   <div class="dropdown-divider"></div>
   <div class="dropdown-item" id="menuTools" onclick="switchPage('tools',this)">
     <i class="fas fa-tools"></i> Tools
-  </div>
-  <div class="dropdown-item" id="menuProjects" onclick="switchPage('projects',this)">
-    <i class="fas fa-code"></i> Projects
   </div>
   <div class="dropdown-item" id="menuContact" onclick="switchPage('contact',this)">
     <i class="fas fa-envelope"></i> Contact
@@ -652,9 +728,191 @@ body.light h1 {
   </div>
 </div>
 
-<!-- Admin Dashboard (keep existing structure, no changes needed) -->
+<!-- Admin Dashboard -->
 <div id="adminPanel" style="display:none;">
-  <!-- ... same admin panel ... -->
+  <div class="admin-container">
+    <div class="admin-header">
+      <div>
+        <h2 style="color:var(--gold);font-family:'Syne',sans-serif;font-size:1.5rem;margin:0;"><i class="fas fa-fire"></i> SAIF ELITE CONTROL</h2>
+        <p style="opacity:0.7;font-size:0.85rem;margin-top:3px;color:var(--text);">Welcome, <span id="adminName" style="color:var(--gold);font-weight:700;">Admin</span></p>
+      </div>
+      <div style="display:flex;gap:10px;align-items:center;">
+        <button class="btn btn-danger" onclick="closeAdminPanel()"><i class="fas fa-sign-out-alt"></i> Logout</button>
+        <button class="btn btn-dark" onclick="closeAdminPanel()"><i class="fas fa-times"></i></button>
+      </div>
+    </div>
+
+    <div class="admin-nav">
+      <button class="nav-tab active" onclick="switchTab('dashboard',event)"><i class="fas fa-tachometer-alt"></i> Dashboard</button>
+      <button class="nav-tab" onclick="switchTab('users',event)"><i class="fas fa-users"></i> Users</button>
+      <button class="nav-tab" onclick="switchTab('messages',event)"><i class="fas fa-envelope"></i> Messages <span id="msgBadge" style="background:#ff416c;color:#fff;font-size:.58rem;padding:2px 6px;border-radius:6px;margin-left:3px;display:none;">0</span></button>
+      <button class="nav-tab" onclick="switchTab('notify',event)"><i class="fas fa-bell"></i> Notify</button>
+      <button class="nav-tab" onclick="switchTab('vip',event)"><i class="fas fa-crown"></i> VIP</button>
+      <button class="nav-tab" onclick="switchTab('content',event)"><i class="fas fa-edit"></i> Content</button>
+      <button class="nav-tab" onclick="switchTab('stories',event)"><i class="fas fa-book"></i> Stories</button>
+      <button class="nav-tab" onclick="switchTab('system',event)"><i class="fas fa-server"></i> System</button>
+    </div>
+
+    <!-- Dashboard -->
+    <div id="dashboardTab" class="admin-content">
+      <div class="admin-section">
+        <h3><i class="fas fa-fire"></i> Overview</h3>
+        <div class="admin-grid">
+          <div class="stat-card"><h4>Visitors</h4><div class="stat-value" id="statVisitors">0</div></div>
+          <div class="stat-card"><h4>Online</h4><div class="stat-value" id="statActive">0</div></div>
+          <div class="stat-card"><h4>Reactions</h4><div class="stat-value" id="statReactions">0</div></div>
+          <div class="stat-card"><h4>Downloads</h4><div class="stat-value" id="statDownloads">0</div></div>
+        </div>
+      </div>
+      <div class="admin-section">
+        <h3><i class="fas fa-clock"></i> Recent Activity</h3>
+        <div class="admin-table-container">
+          <table class="admin-table">
+            <thead><tr><th>User</th><th>Action</th><th>Time</th></tr></thead>
+            <tbody id="activityTable"></tbody>
+          </table>
+        </div>
+      </div>
+      <div class="admin-section">
+        <h3><i class="fas fa-bolt"></i> Quick Actions</h3>
+        <div style="display:flex;gap:10px;flex-wrap:wrap;margin-top:13px;">
+          <button class="btn btn-warning" onclick="exportData()"><i class="fas fa-download"></i> Export</button>
+          <button class="btn btn-dark" onclick="clearCache()"><i class="fas fa-broom"></i> Cache</button>
+          <button class="btn btn-danger" onclick="emergencyLock()"><i class="fas fa-lock"></i> Lock</button>
+        </div>
+      </div>
+      <div class="admin-section">
+        <h3><i class="fas fa-server"></i> Status</h3>
+        <div class="admin-grid">
+          <div class="stat-card"><h4>Firebase</h4><div style="color:#25D366;font-size:1.6rem;margin:7px 0;">✓</div><span style="color:var(--text);font-size:0.78rem;">Connected</span></div>
+          <div class="stat-card"><h4>Memory</h4><div class="stat-value" id="memoryUsage">--</div></div>
+          <div class="stat-card"><h4>Uptime</h4><div class="stat-value" id="uptime">99.9%</div></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Users Tab -->
+    <div id="usersTab" class="admin-content" style="display:none;">
+      <div class="admin-section" style="grid-column:1/-1;">
+        <h3><i class="fas fa-users"></i> User Management</h3>
+        <div style="display:flex;gap:10px;margin-bottom:15px;flex-wrap:wrap;">
+          <input type="text" id="searchUser" placeholder="Search users..." style="flex:1;min-width:140px;margin:0;">
+          <button class="btn btn-warning" onclick="searchUsers()"><i class="fas fa-search"></i></button>
+          <button class="btn btn-danger" onclick="deleteInactiveUsers()"><i class="fas fa-trash"></i> Clean</button>
+        </div>
+        <div class="admin-table-container">
+          <table class="admin-table">
+            <thead><tr><th>Name</th><th>Device</th><th>Status</th><th>Last Active</th><th>Action</th></tr></thead>
+            <tbody id="userManagementTable"></tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- Content Tab -->
+    <div id="contentTab" class="admin-content" style="display:none;">
+      <div class="admin-section">
+        <h3><i class="fas fa-id-card"></i> Profile Info</h3>
+        <div class="form-group"><label>FULL NAME</label><input type="text" id="editName" placeholder="Full name..."></div>
+        <div class="form-group"><label>TITLE / BADGE</label><input type="text" id="editTitle" placeholder="Title..."></div>
+        <div class="form-group"><label>QUOTE</label><textarea id="editQuote" rows="2" placeholder="Quote..."></textarea></div>
+        <div class="form-group"><label>NICKNAME</label><input type="text" id="editNickname" placeholder="Nickname..."></div>
+        <div class="form-group"><label>BIRTHDAY</label><input type="text" id="editBirthday" placeholder="e.g. 25 January"></div>
+        <div class="form-group"><label>STATUS</label><input type="text" id="editStatus" placeholder="Status..."></div>
+        <div class="form-group"><label>SKILLS</label><input type="text" id="editSkills" placeholder="Skills..."></div>
+        <div class="form-group"><label>HOMETOWN</label><input type="text" id="editHometown" placeholder="Hometown..."></div>
+        <div class="form-group"><label>CURRENT LOCATION</label><input type="text" id="editCurrent" placeholder="Current location..."></div>
+        <button class="btn btn-success" onclick="updateProfile()" style="width:100%;margin-top:6px;"><i class="fas fa-save"></i> Save Profile</button>
+      </div>
+      <div class="admin-section">
+        <h3><i class="fas fa-image"></i> Media & Links</h3>
+        <div class="form-group"><label>AVATAR URL</label><input type="text" id="editAvatar" placeholder="Avatar URL..."></div>
+        <div class="form-group"><label>MIKASA IMAGE URL</label><input type="text" id="editMikasa" placeholder="Mikasa image URL..."></div>
+        <div class="form-group"><label>MIKASA BIO</label><textarea id="editMikasaText" rows="3" placeholder="Mikasa description..."></textarea></div>
+        <div class="form-group"><label>BG MUSIC URL</label><input type="text" id="editBgMusic" placeholder="Audio URL..."></div>
+        <div class="form-group"><label>FACEBOOK URL</label><input type="text" id="editFb" placeholder="Facebook URL..."></div>
+        <div class="form-group"><label>WHATSAPP NUMBER</label><input type="text" id="editWa" placeholder="e.g. 8801823772045"></div>
+        <div class="form-group"><label>INSTAGRAM URL</label><input type="text" id="editIg" placeholder="Instagram URL..."></div>
+        <div class="form-group"><label>EMAIL</label><input type="text" id="editEmail" placeholder="Email..."></div>
+        <button class="btn btn-success" onclick="updateProfile()" style="width:100%;margin-top:6px;"><i class="fas fa-save"></i> Save Media</button>
+      </div>
+    </div>
+
+    <!-- Messages Tab -->
+    <div id="messagesTab" class="admin-content" style="display:none;">
+      <div class="admin-section" style="grid-column:1/-1;">
+        <h3><i class="fas fa-envelope"></i> Contact Messages</h3>
+        <div style="display:flex;gap:8px;margin-bottom:14px;flex-wrap:wrap;">
+          <button class="btn btn-warning" onclick="loadMessages()"><i class="fas fa-sync"></i> Refresh</button>
+          <button class="btn btn-danger" onclick="clearAllMessages()"><i class="fas fa-trash"></i> Clear All</button>
+        </div>
+        <div id="messagesContainer"><div style="text-align:center;padding:28px;opacity:.5;"><div class="spinner"></div><p style="margin-top:10px;">Loading...</p></div></div>
+      </div>
+    </div>
+
+    <!-- Notify Tab -->
+    <div id="notifyTab" class="admin-content" style="display:none;">
+      <div class="admin-section">
+        <h3><i class="fas fa-bell"></i> Emergency Banner</h3>
+        <p style="font-size:.8rem;opacity:.55;margin-bottom:13px;color:var(--text);">Site এ সবার কাছে live alert পাঠাও।</p>
+        <div class="form-group"><label>BANNER MESSAGE</label><input type="text" id="bannerMsg" placeholder="e.g. Site maintenance tonight!" style="margin:0;"></div>
+        <div style="display:flex;gap:8px;margin-top:10px;flex-wrap:wrap;">
+          <button class="btn btn-danger" onclick="sendEmergencyBanner()" style="flex:1;"><i class="fas fa-broadcast-tower"></i> Send</button>
+          <button class="btn btn-dark" onclick="clearEmergencyBanner()" style="flex:1;"><i class="fas fa-times"></i> Clear</button>
+        </div>
+        <div id="bannerPreview" style="display:none;margin-top:13px;padding:11px;border-radius:11px;background:linear-gradient(135deg,#ff416c,#ff4b2b);color:#fff;font-weight:700;font-size:.82rem;text-align:center;">Preview: <span id="bannerPreviewText"></span></div>
+      </div>
+      <div class="admin-section">
+        <h3><i class="fas fa-paper-plane"></i> Push Notification</h3>
+        <p style="font-size:.8rem;opacity:.55;margin-bottom:13px;color:var(--text);">সব user এর screen এ popup পাঠাও।</p>
+        <div class="form-group"><label>TITLE</label><input type="text" id="pushTitle" placeholder="Notification title..." style="margin:0 0 8px 0;"></div>
+        <div class="form-group"><label>MESSAGE</label><textarea id="pushMsg" rows="2" placeholder="Message..." style="margin:0;"></textarea></div>
+        <select id="pushType" style="margin:8px 0;"><option value="info">ℹ️ Info</option><option value="success">✅ Success</option><option value="error">🚨 Alert</option><option value="warning">⚠️ Warning</option></select>
+        <button class="btn btn-warning" onclick="sendPushNotification()" style="width:100%;"><i class="fas fa-paper-plane"></i> Send to All</button>
+      </div>
+    </div>
+
+    <!-- VIP Tab -->
+    <div id="vipTab" class="admin-content" style="display:none;">
+      <div class="admin-section">
+        <h3><i class="fas fa-crown"></i> Grant VIP</h3>
+        <div class="form-group"><label>USER NAME</label><input type="text" id="vipUserName" placeholder="Exact user name..." style="margin:0 0 8px 0;"></div>
+        <div class="form-group"><label>VIP LABEL</label><input type="text" id="vipLabel" placeholder="e.g. Elite Member..." style="margin:0 0 8px 0;"></div>
+        <div class="form-group"><label>EXPIRES (optional)</label><input type="date" id="vipExpiry" style="margin:0;"></div>
+        <div style="display:flex;gap:8px;margin-top:10px;">
+          <button class="btn btn-warning" onclick="grantVIP()" style="flex:1;"><i class="fas fa-crown"></i> Grant</button>
+          <button class="btn btn-danger" onclick="revokeVIP()" style="flex:1;"><i class="fas fa-ban"></i> Revoke</button>
+        </div>
+      </div>
+      <div class="admin-section">
+        <h3><i class="fas fa-list"></i> VIP Members</h3>
+        <div id="vipListContainer" style="margin-top:10px;"><div class="spinner"></div></div>
+      </div>
+    </div>
+
+    <!-- Stories Tab -->
+    <div id="storiesTab" class="admin-content" style="display:none;">
+      <div class="admin-section" style="grid-column:1/-1;">
+        <h3><i class="fas fa-book"></i> Stories Management</h3>
+        <p style="opacity:0.65;margin-top:10px;color:var(--text);font-size:0.85rem;">Stories loaded from Google Sheets. Change URL below to update source.</p>
+        <div class="form-group" style="margin-top:16px;"><label>GOOGLE SHEETS URL</label><input type="text" id="editSheetsUrl" placeholder="Sheets URL..." style="margin:0;"></div>
+        <button class="btn btn-warning" onclick="updateSheetsUrl()" style="margin-top:10px;"><i class="fas fa-save"></i> Update URL</button>
+      </div>
+    </div>
+
+    <!-- System Tab -->
+    <div id="systemTab" class="admin-content" style="display:none;">
+      <div class="admin-section" style="grid-column:1/-1;">
+        <h3><i class="fas fa-server"></i> System Info</h3>
+        <div class="admin-grid" style="margin-top:13px;">
+          <div class="stat-card"><h4>Browser</h4><div style="font-size:0.75rem;color:var(--text);margin-top:7px;word-break:break-all;" id="sysBrowser">--</div></div>
+          <div class="stat-card"><h4>Platform</h4><div style="font-size:0.75rem;color:var(--text);margin-top:7px;" id="sysPlatform">--</div></div>
+          <div class="stat-card"><h4>Screen</h4><div style="font-size:0.75rem;color:var(--text);margin-top:7px;" id="sysScreen">--</div></div>
+          <div class="stat-card"><h4>Language</h4><div style="font-size:0.75rem;color:var(--text);margin-top:7px;" id="sysLang">--</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>
 
 <!-- Notification Area -->
@@ -675,21 +933,87 @@ body.light h1 {
 <!-- ============================================================ -->
 <div id="homePage" class="page-section active">
 <div class="wrap">
-<div class="card" id="mainCard">
+<div class="card">
+  <!-- Cover Image -->
   <div class="card-cover">
     <img src="https://i.imgur.com/zq5JFC5.jpeg" id="coverImage" alt="Cover">
   </div>
+
   <div class="avatarBox">
     <div class="fire-ring"></div>
     <div class="fire-ring-2"></div>
     <div class="fire-ring-3"></div>
     <img src="https://i.imgur.com/58L6IZM.jpeg" class="avatar" id="mainAvatar">
   </div>
+
   <div style="margin-top:90px;"></div>
+
   <h1 id="userGreeting">MOHAMMAD SAIFUL ISLAM</h1>
+  <div id="vipBadgeArea"></div>
   <div class="profile-badge" id="profileBadge">Honours 2nd Year (Management)</div>
-  <p style="font-style:italic;font-size:0.78rem;opacity:0.8;margin-bottom:16px;padding:0 16px;color:var(--text);" id="profileQuote">"Focus on your career, let the success make the noise."</p>
-  <div class="section-title">Personal Profile</div>
+  <p style="font-style:italic;font-size:0.78rem;opacity:0.8;margin-bottom:8px;padding:0 16px;color:var(--text);" id="profileQuote">"Focus on your career, let the success make the noise."</p>
+  <div class="typing-wrap"><span id="typingText"></span><span class="t-cursor"></span></div>
+  <div class="hero-stats">
+    <div class="hstat"><div class="hstat-n">3+</div><div class="hstat-l">Projects</div></div>
+    <div class="hstat"><div class="hstat-n" id="visitorCount">...</div><div class="hstat-l">Visitors</div></div>
+    <div class="hstat"><div class="hstat-n">50+</div><div class="hstat-l">Bot Cmds</div></div>
+  </div>
+  <div class="hero-ctas">
+    <a class="cta-btn cta-fire" href="https://m.me/j/AbYhrDx5QWRQ54or/" target="_blank"><i class="fab fa-facebook-messenger"></i>Join Mikasa</a>
+    <a class="cta-btn cta-ghost" href="https://github.com/SAIFUL-404-STU" target="_blank"><i class="fab fa-github"></i>GitHub</a>
+  </div>
+
+  <div class="section-title reveal">Skills & Tech</div>
+  <div class="skills-grid reveal" id="skillsGrid">
+    <div class="skill-card"><span class="sk-emoji">⚡</span><div class="sk-name">JavaScript</div><div class="sk-bar"><div class="sk-fill" data-w="88"></div></div></div>
+    <div class="skill-card"><span class="sk-emoji">🤖</span><div class="sk-name">Bot Dev</div><div class="sk-bar"><div class="sk-fill" data-w="95"></div></div></div>
+    <div class="skill-card"><span class="sk-emoji">🌐</span><div class="sk-name">HTML/CSS</div><div class="sk-bar"><div class="sk-fill" data-w="85"></div></div></div>
+    <div class="skill-card"><span class="sk-emoji">🟢</span><div class="sk-name">Node.js</div><div class="sk-bar"><div class="sk-fill" data-w="80"></div></div></div>
+    <div class="skill-card"><span class="sk-emoji">🔥</span><div class="sk-name">Firebase</div><div class="sk-bar"><div class="sk-fill" data-w="78"></div></div></div>
+    <div class="skill-card"><span class="sk-emoji">🚀</span><div class="sk-name">Deployment</div><div class="sk-bar"><div class="sk-fill" data-w="82"></div></div></div>
+  </div>
+
+  <div class="section-title reveal">Projects</div>
+  <div class="proj-grid reveal">
+    <div class="proj-card">
+      <div class="proj-live">Live</div>
+      <div class="proj-head">
+        <div class="proj-title">🤖 Mikasa Bot</div>
+        <div class="proj-btns">
+          <a class="proj-btn" href="https://m.me/j/AbYhrDx5QWRQ54or/" target="_blank"><i class="fab fa-facebook-messenger"></i></a>
+          <a class="proj-btn" href="https://github.com/SAIFUL-404-STU" target="_blank"><i class="fab fa-github"></i></a>
+        </div>
+      </div>
+      <p class="proj-desc">Premium Facebook Messenger bot on GoatBot. Economy, games, VIP, AI integration, 50+ commands. Hosted on Railway.</p>
+      <div class="proj-tags"><span class="proj-tag">GoatBot</span><span class="proj-tag">Node.js</span><span class="proj-tag">Firebase</span></div>
+    </div>
+    <div class="proj-card">
+      <div class="proj-live">Live</div>
+      <div class="proj-head">
+        <div class="proj-title">🌐 Saif Elite Portfolio</div>
+        <div class="proj-btns">
+          <a class="proj-btn" href="https://saiful-404-stu.github.io/Portofolio/" target="_blank"><i class="fas fa-external-link-alt"></i></a>
+          <a class="proj-btn" href="https://github.com/SAIFUL-404-STU/Portofolio" target="_blank"><i class="fab fa-github"></i></a>
+        </div>
+      </div>
+      <p class="proj-desc">This portfolio — HTML/CSS/JS with plugin system, Firebase, admin panel, VIP, fire effects.</p>
+      <div class="proj-tags"><span class="proj-tag">HTML/CSS/JS</span><span class="proj-tag">Firebase</span><span class="proj-tag">Plugin System</span></div>
+    </div>
+    <div class="proj-card">
+      <div class="proj-live">Live</div>
+      <div class="proj-head">
+        <div class="proj-title">📥 AllDL API</div>
+        <div class="proj-btns">
+          <a class="proj-btn" href="https://alldl-0nok.onrender.com" target="_blank"><i class="fas fa-server"></i></a>
+          <a class="proj-btn" href="https://github.com/SAIFUL-404-STU/Autodl-" target="_blank"><i class="fab fa-github"></i></a>
+        </div>
+      </div>
+      <p class="proj-desc">Self-hosted media downloader API. YouTube, Facebook, TikTok, Instagram via yt-dlp. Deployed on Render.</p>
+      <div class="proj-tags"><span class="proj-tag">Node.js</span><span class="proj-tag">Express</span><span class="proj-tag">yt-dlp</span></div>
+    </div>
+  </div>
+
+  <div class="section-title reveal">Personal Profile</div>
   <div class="grid">
     <div class="info"><i class="fas fa-user-tag"></i><span class="label">Nickname</span><span class="value" id="infoNickname">Saif</span></div>
     <div class="info"><i class="fas fa-cake-candles"></i><span class="label">Birthday</span><span class="value" id="infoBirthday">25 January</span></div>
@@ -698,6 +1022,7 @@ body.light h1 {
     <div class="info"><i class="fas fa-house"></i><span class="label">Home Town</span><span class="value" id="infoHometown">Gaibandha Sadar</span></div>
     <div class="info"><i class="fas fa-location-dot"></i><span class="label">Current</span><span class="value" id="infoCurrent">Gazipur , Dhaka</span></div>
   </div>
+
   <div class="section-title">Your Mikasa Baby</div>
   <div class="mikasa">
     <div class="mikasaHead">
@@ -713,6 +1038,7 @@ body.light h1 {
       <i class="fab fa-facebook-messenger"></i> JOIN MIKASA WORLD
     </a>
   </div>
+
   <div class="section-title">Connect With Me</div>
   <div class="social">
     <a class="fb" id="socialFb" href="https://www.facebook.com/saiful.404.st" target="_blank"><i class="fab fa-facebook-f"></i></a>
@@ -720,6 +1046,7 @@ body.light h1 {
     <a class="ig" id="socialIg" href="https://www.instagram.com/saiful_404_st" target="_blank"><i class="fab fa-instagram"></i></a>
     <a class="mail" id="socialMail" href="mailto:saifmorse04@gmail.com"><i class="fas fa-envelope"></i></a>
   </div>
+
   <div class="visitor-box">
     <p style="font-size:0.8rem;font-weight:800;display:flex;align-items:center;justify-content:center;gap:10px;color:var(--text);">
       <i class="fas fa-eye" style="color:var(--gold);font-size:1.1rem;"></i>
@@ -727,62 +1054,48 @@ body.light h1 {
       <span id="visitorCount" style="color:var(--gold);font-size:1.45rem;font-weight:900;">...</span>
     </p>
   </div>
+
   <div class="footer" onclick="openAdmin()" style="cursor:pointer;"
        onmouseover="this.style.opacity='1';this.style.borderColor='var(--gold)';"
        onmouseout="this.style.opacity='0.55';this.style.borderColor='var(--footer-border)';">
-    <i class="fas fa-fire"></i> ELITE PROFILE • ELITE SAIF  <i class="fas fa-crown"></i>
+    <i class="fas fa-fire"></i> ELITE PROFILE • SAIF BABY  <i class="fas fa-crown"></i>
   </div>
 </div>
 </div>
 </div>
 
-<!-- ============================================================ -->
-<!-- TOOLS PAGE (unchanged from previous, will be filled by plugins) -->
-<!-- ============================================================ -->
+<!-- TOOLS PAGE -->
 <div id="toolsPage" class="page-section">
 <div class="wrap" style="margin-top:85px;">
-  <div class="section-title" style="margin-bottom:20px;"><i class="fas fa-fire"></i> Elite Tools</div>
-  <div id="toolsPluginZone" style="display:flex;flex-direction:column;gap:20px;"></div>
-  <div id="toolsContainer"></div>
+  <span class="sec-lbl">Utilities</span>
+  <div class="sec-hd">Elite Tools 🛠️</div>
+  <div id="toolCardsGrid" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:12px;"></div>
+  <div id="toolsPluginZone" style="display:none;"></div>
+  <div id="toolsContainer" style="display:none;"></div>
 </div>
 </div>
 
-<!-- ============================================================ -->
-<!-- PROJECTS PAGE (NEW) -->
-<!-- ============================================================ -->
-<div id="projectsPage" class="page-section">
-<div class="wrap" style="margin-top:85px;">
-  <div class="section-title"><i class="fas fa-code"></i> My Projects</div>
-  <div class="projects-grid">
-    <div class="project-card">
-      <h3><i class="fas fa-robot"></i> Mikasa Bot</h3>
-      <p>Multi-functional Messenger bot with 200+ commands, game, AI chat. Strictly clean.</p>
-      <a href="https://m.me/j/AbYhrDx5QWRQ54or/" target="_blank">Try Bot →</a>
+<!-- TOOL MODAL -->
+<div id="toolModal" style="display:none;position:fixed;inset:0;z-index:9500;flex-direction:column;background:rgba(5,5,5,.96);backdrop-filter:blur(28px);overflow-y:auto;">
+  <div class="tmodal-hdr">
+    <div class="tmodal-back" onclick="closeTool()"><i class="fas fa-arrow-left"></i></div>
+    <div style="flex:1;">
+      <div style="font-family:'Syne',sans-serif;font-weight:800;font-size:1.05rem;color:var(--gold);" id="toolModalTitle">Tool</div>
+      <div style="font-size:.65rem;opacity:.4;margin-top:1px;" id="toolModalSub"></div>
     </div>
-    <div class="project-card">
-      <h3><i class="fas fa-server"></i> Hosting Panel</h3>
-      <p>Custom hosting panel for bots & websites. One-click deploy.</p>
-      <a href="#">Coming Soon</a>
-    </div>
-    <div class="project-card">
-      <h3><i class="fas fa-globe"></i> Personal Portfolio</h3>
-      <p>This very site with live tools, stories, guestbook and more.</p>
-      <a href="#">Live</a>
-    </div>
-    <!-- Add more projects dynamically from Firebase or static -->
+    <div style="background:linear-gradient(135deg,var(--fire1),var(--fire2));color:#000;font-size:.6rem;font-weight:900;padding:4px 10px;border-radius:8px;letter-spacing:.5px;">FREE</div>
   </div>
-  <div class="footer" style="margin-top:20px;text-align:center;">
-    <i class="fas fa-fire"></i> MORE PROJECTS LOADING... <i class="fas fa-crown"></i>
-  </div>
-</div>
+  <div class="tmodal-body" id="toolModalBody"></div>
 </div>
 
 <!-- ============================================================ -->
-<!-- CONTACT PAGE (unchanged) -->
+<!-- CONTACT PAGE -->
 <!-- ============================================================ -->
 <div id="contactPage" class="page-section">
 <div class="wrap" style="margin-top:85px;">
+
   <div class="section-title" style="margin-bottom:20px;"><i class="fas fa-satellite-dish"></i> Contact Me</div>
+
   <div style="background:var(--card-bg);border-radius:24px;padding:24px;border:1px solid rgba(255,215,0,0.12);backdrop-filter:blur(20px);">
     <a class="contact-link" id="contactFb" href="https://www.facebook.com/saiful.404.st" target="_blank">
       <div class="c-icon" style="background:linear-gradient(135deg,#1877f2,#0d5fcc);"><i class="fab fa-facebook-f" style="color:#fff;"></i></div>
@@ -810,38 +1123,36 @@ body.light h1 {
       <i class="fas fa-chevron-right" style="margin-left:auto;color:var(--gold);opacity:0.5;"></i>
     </a>
   </div>
+
   <div style="background:var(--card-bg);border-radius:24px;padding:24px;border:1px solid rgba(255,215,0,0.12);backdrop-filter:blur(20px);margin-top:16px;">
     <div class="section-title" style="margin:0 0 16px 0;font-size:0.75rem;"><i class="fas fa-paper-plane"></i> Send Message</div>
     <input type="text" id="contactName" placeholder="Your Name" style="margin:0 0 8px 0;">
     <textarea id="contactMsg" rows="4" placeholder="Kisu bolba jan? " style="margin:0 0 12px 0;"></textarea>
-    <button onclick="sendContactMessage()" style="width:100%;padding:13px;border-radius:13px;border:none;background:linear-gradient(135deg,var(--fire1),var(--fire2));color:#000;font-weight:900;font-size:0.92rem;cursor:pointer;font-family:'Outfit',sans-serif;transition:all 0.3s;">
+    <button onclick="sendContactMessage()" style="width:100%;padding:13px;border-radius:13px;border:none;background:linear-gradient(135deg,var(--fire1),var(--fire2));color:#000;font-weight:900;font-size:0.92rem;cursor:pointer;font-family:'Outfit',sans-serif;transition:all 0.3s;" onmouseover="this.style.transform='translateY(-3px)';this.style.boxShadow='0 12px 28px rgba(255,102,0,0.5)'" onmouseout="this.style.transform='';this.style.boxShadow=''">
       <i class="fas fa-paper-plane"></i> SEND MESSAGE
     </button>
   </div>
-  <div class="footer" style="margin-top:20px;text-align:center;">
-    <i class="fas fa-fire"></i> ELITE PROFILE • ELITE SAIF  <i class="fas fa-crown"></i>
-  </div>
-</div>
-</div>
 
-<!-- Live Chat Floating Button & Popup (Guestbook) -->
-<div class="live-chat-btn" id="chatBtn" onclick="toggleChat()"><i class="fas fa-comments"></i></div>
-<div class="chat-popup" id="chatPopup" style="display:none;">
-  <div class="chat-header">
-    <span><i class="fas fa-fire"></i> Public Guestbook</span>
-    <i class="fas fa-times" onclick="toggleChat()" style="cursor:pointer;"></i>
+  <div class="footer" style="margin-top:20px;text-align:center;">
+    <i class="fas fa-fire"></i> ELITE PROFILE • SAIF BABY  <i class="fas fa-crown"></i>
   </div>
-  <div class="chat-messages" id="chatMessages">
-    <p style="opacity:0.6;text-align:center;">Loading messages...</p>
-  </div>
-  <div class="chat-input">
-    <input type="text" id="chatInput" placeholder="Write a message..." onkeydown="if(event.key==='Enter')sendChat()">
-    <button onclick="sendChat()"><i class="fas fa-paper-plane"></i></button>
-  </div>
+</div>
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script>
+// ===== PRELOADER — hides always, no matter what =====
+(function(){
+  function hideLoader(){
+    const p=document.getElementById('preloader');
+    if(p){p.classList.add('hide');setTimeout(()=>{p.style.display='none';},700);}
+  }
+  // Primary: on window load
+  window.addEventListener('load',()=>setTimeout(hideLoader,1800));
+  // Fallback: force hide after 4 seconds
+  setTimeout(hideLoader,4000);
+})();
+
 // ===== CONFIG =====
 const ADMIN_CREDENTIALS = { email:"saifmorse04@gmail.com", password:"saiful@1" };
 const firebaseConfig = {
@@ -853,185 +1164,490 @@ const firebaseConfig = {
   messagingSenderId:"922189130029",
   appId:"1:922189130029:web:92defd36acbda8c151cba4"
 };
-firebase.initializeApp(firebaseConfig);
-const db = firebase.database();
-let currentUser=null, isAdminLoggedIn=false, adminSession=null, isLightMode=false;
+
+// ===== FIREBASE — safe init =====
+let db = null;
+try {
+  if(typeof firebase !== 'undefined'){
+    firebase.initializeApp(firebaseConfig);
+    db = firebase.database();
+    console.log('[Saif] Firebase ✅');
+  } else {
+    console.warn('[Saif] Firebase CDN not loaded');
+  }
+} catch(e){
+  console.warn('[Saif] Firebase error:',e.message);
+}
+
+// Safe db helper — won't crash if firebase failed
+function safeDB(path){
+  try{ return db ? safeDB(path) : null; } catch(e){ return null; }
+}
+
+
+// Null-safe Firebase operation wrapper
+function dbOn(path, event, cb){ const r=safeDB(path); if(r) r.on(event,cb); }
+function dbOnce(path, cb){ const r=safeDB(path); if(r) r.once('value').then(cb); }
+function dbSet(path, val){ const r=safeDB(path); if(r) return r.set(val); return Promise.resolve(); }
+function dbUpdate(path, val){ const r=safeDB(path); if(r) return r.update(val); return Promise.resolve(); }
+function dbPush(path, val){ const r=safeDB(path); if(r) return r.push(val); return Promise.resolve(); }
+function dbRemove(path){ const r=safeDB(path); if(r) return r.remove(); return Promise.resolve(); }
+function dbTransaction(path, fn){ const r=safeDB(path); if(r) r.transaction(fn); }
+
+let currentUser=null, isAdminLoggedIn=false, adminSession=null, isLightMode=false, musicEnabled=false;
 let sheetsUrl='https://docs.google.com/spreadsheets/d/1YgOhoUvNbKBH1Um-WRvUE5GVkj1_PS77JQPt0hvbjUU/gviz/tq?tqx=out:csv';
 
+// ===== CUSTOM CURSOR =====
+(function(){
+  const dot=document.getElementById('cursorDot'),ring=document.getElementById('cursorRing');
+  if(!dot||!ring)return;
+  let mx=0,my=0,rx=0,ry=0;
+  document.addEventListener('mousemove',e=>{mx=e.clientX;my=e.clientY;dot.style.left=mx+'px';dot.style.top=my+'px';});
+  (function anim(){rx+=(mx-rx)*.12;ry+=(my-ry)*.12;ring.style.left=rx+'px';ring.style.top=ry+'px';requestAnimationFrame(anim);})();
+  document.querySelectorAll('a,button,[onclick]').forEach(el=>{
+    el.addEventListener('mouseenter',()=>ring.classList.add('hov'));
+    el.addEventListener('mouseleave',()=>ring.classList.remove('hov'));
+  });
+})();
+
 // ===== RAIN =====
-const rainCanvas=document.getElementById('rainCanvas');
-const rainCtx=rainCanvas.getContext('2d');
-let drops=[];
+const rainCanvas=document.getElementById('rainCanvas'),rainCtx=rainCanvas.getContext('2d');let drops=[];
 function resizeCanvas(){rainCanvas.width=window.innerWidth;rainCanvas.height=window.innerHeight;}
 window.addEventListener('resize',resizeCanvas);resizeCanvas();
-function createDrop(){return{x:Math.random()*rainCanvas.width,y:Math.random()*rainCanvas.height-100,len:Math.random()*18+8,speed:Math.random()*5+3,opacity:Math.random()*0.2+0.1};}
-function initRain(){drops=[];for(let i=0;i<160;i++)drops.push(createDrop());}
+function initRain(){drops=[];for(let i=0;i<160;i++)drops.push({x:Math.random()*rainCanvas.width,y:Math.random()*rainCanvas.height-100,len:Math.random()*18+8,speed:Math.random()*5+3,opacity:Math.random()*.2+.1});}
 function animateRain(){
   const g=rainCtx.createLinearGradient(0,0,0,rainCanvas.height);
-  if(isLightMode){g.addColorStop(0,'#f0f0f0');g.addColorStop(1,'#e0e0e0');}
-  else{g.addColorStop(0,'#080808');g.addColorStop(1,'#0d0d0d');}
+  if(isLightMode){g.addColorStop(0,'#f0f0f0');g.addColorStop(1,'#e0e0e0');}else{g.addColorStop(0,'#080808');g.addColorStop(1,'#0d0d0d');}
   rainCtx.fillStyle=g;rainCtx.fillRect(0,0,rainCanvas.width,rainCanvas.height);
-  for(let i=0;i<drops.length;i++){
-    const d=drops[i];rainCtx.beginPath();rainCtx.moveTo(d.x,d.y);rainCtx.lineTo(d.x-1,d.y+d.len);
-    rainCtx.strokeStyle=isLightMode?`rgba(180,100,0,${d.opacity})`:`rgba(255,180,0,${d.opacity*0.6})`;
-    rainCtx.lineWidth=1.2;rainCtx.stroke();
-    d.y+=d.speed;d.x-=0.35;
-    if(d.y>rainCanvas.height){d.y=-d.len;d.x=Math.random()*rainCanvas.width;}
-  }
+  drops.forEach(d=>{rainCtx.beginPath();rainCtx.moveTo(d.x,d.y);rainCtx.lineTo(d.x-1,d.y+d.len);rainCtx.strokeStyle=isLightMode?`rgba(180,100,0,${d.opacity})`:`rgba(255,180,0,${d.opacity*.6})`;rainCtx.lineWidth=1.2;rainCtx.stroke();d.y+=d.speed;d.x-=.35;if(d.y>rainCanvas.height){d.y=-d.len;d.x=Math.random()*rainCanvas.width;}});
   requestAnimationFrame(animateRain);
-}
-initRain();animateRain();
-
-// ===== FIRE PARTICLES =====
-function createFireParticles(){
-  const c=document.getElementById('fireParticles');
-  const colors=['#ff3300','#ff6600','#ff9900','#ffcc00','#ffaa00'];
-  for(let i=0;i<35;i++){
-    const p=document.createElement('div');p.className='fire-particle';
-    const s=Math.random()*8+3;
-    p.style.width=s+'px';p.style.height=s+'px';
-    p.style.left=Math.random()*100+'vw';
-    p.style.bottom='-20px';
-    p.style.background=colors[Math.floor(Math.random()*colors.length)];
-    p.style.animationDuration=(Math.random()*12+8)+'s';
-    p.style.animationDelay=(Math.random()*10)+'s';
-    c.appendChild(p);
-  }
-}
+}initRain();animateRain();
 
 // ===== PARTICLES =====
-function createParticles(){
-  const c=document.getElementById('particles');
-  for(let i=0;i<30;i++){
-    const p=document.createElement('div');p.className='particle';
-    const s=Math.random()*3+1;p.style.width=s+'px';p.style.height=s+'px';
-    p.style.left=Math.random()*100+'vw';
-    p.style.animationDuration=(Math.random()*18+12)+'s';
-    p.style.animationDelay=(Math.random()*12)+'s';
-    p.style.opacity=Math.random()*0.18+0.05;
-    c.appendChild(p);
-  }
+function createFireParticles(){const c=document.getElementById('fireParticles');const colors=['#ff3300','#ff6600','#ff9900','#ffcc00'];for(let i=0;i<35;i++){const p=document.createElement('div');p.className='fire-particle';const s=Math.random()*8+3;p.style.cssText=`width:${s}px;height:${s}px;left:${Math.random()*100}vw;bottom:-20px;background:${colors[Math.floor(Math.random()*colors.length)]};animation-duration:${Math.random()*12+8}s;animation-delay:${Math.random()*10}s;`;c.appendChild(p);}}
+function createParticles(){const c=document.getElementById('particles');for(let i=0;i<30;i++){const p=document.createElement('div');p.className='particle';const s=Math.random()*3+1;p.style.cssText=`width:${s}px;height:${s}px;left:${Math.random()*100}vw;animation-duration:${Math.random()*18+12}s;animation-delay:${Math.random()*12}s;opacity:${Math.random()*.18+.05};`;c.appendChild(p);}}
+
+// ===== TYPING =====
+const phrases=['Bot Developer 🤖','GoatBot Expert ⚡','Firebase Wizard 🔥','Web Creator 🌐','Node.js Dev 🟢','Saif Elite 👑'];
+let tI=0,tC=0,tDel=false;
+function typeIt(){
+  const el=document.getElementById('typingText');if(!el)return;
+  const ph=phrases[tI];if(tDel)tC--;else tC++;
+  el.textContent=ph.substring(0,tC);
+  let d=tDel?55:95;
+  if(!tDel&&tC===ph.length){d=1800;tDel=true;}
+  if(tDel&&tC===0){tDel=false;tI=(tI+1)%phrases.length;d=350;}
+  setTimeout(typeIt,d);
 }
 
-// ===== INIT =====
-window.onload=function(){
-  createParticles();createFireParticles();
-  loadVisitorCount();checkExistingUser();loadProfileFromDB();
-  setInterval(updateAdminBadge,30000);
-  document.getElementById('sysBrowser').textContent=navigator.userAgent.substring(0,40)+'...';
-  document.getElementById('sysPlatform').textContent=navigator.platform||'Unknown';
-  document.getElementById('sysScreen').textContent=screen.width+'x'+screen.height;
-  document.getElementById('sysLang').textContent=navigator.language||'Unknown';
+// ===== SCROLL REVEAL =====
+function initScrollReveal(){
+  const obs=new IntersectionObserver(entries=>{entries.forEach(e=>{if(e.isIntersecting)e.target.classList.add('visible');});},{threshold:.1});
+  document.querySelectorAll('.reveal').forEach(el=>obs.observe(el));
+}
 
-  // 3D tilt on card
-  const card = document.getElementById('mainCard');
-  if(card){
-    card.addEventListener('mousemove', e => {
-      const rect = card.getBoundingClientRect();
-      const x = e.clientX - rect.left, y = e.clientY - rect.top;
-      const rotateX = (y/rect.height - 0.5) * 10;
-      const rotateY = (x/rect.width - 0.5) * -10;
-      card.style.transform = `perspective(600px) rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
-    });
-    card.addEventListener('mouseleave', () => card.style.transform = '');
-  }
-};
+// ===== SKILL BARS =====
+function initSkillBars(){
+  const obs=new IntersectionObserver(entries=>{entries.forEach(e=>{if(e.isIntersecting){e.target.querySelectorAll('.sk-fill').forEach(b=>b.style.width=b.dataset.w+'%');obs.unobserve(e.target);}});},{threshold:.3});
+  const g=document.getElementById('skillsGrid');if(g)obs.observe(g);
+}
+
+// ===== TOOL CARDS =====
+const TOOLS=[
+  {id:'saif-gemini-box',   icon:'🤖',name:'Gemini AI',      desc:'Chat with Google AI',       badge:'AI'},
+  {id:'saif-fbinfo-box',   icon:'🔍',name:'FB Spy',         desc:'Facebook user info',         badge:'FB'},
+  {id:'saif-dl-box',       icon:'📥',name:'Downloader',     desc:'YT, FB, TikTok, Insta',     badge:'HOT'},
+  {id:'saif-weather-box',  icon:'🌤️',name:'Weather',        desc:'Live weather by city',       badge:''},
+  {id:'saif-lyrics-box',   icon:'🎵',name:'Lyrics',         desc:'Search song lyrics',         badge:''},
+  {id:'saif-currency-box', icon:'💱',name:'Currency',       desc:'Real-time converter',        badge:''},
+  {id:'saif-qr-box',       icon:'📷',name:'QR Code',        desc:'Generate or read QR',        badge:''},
+  {id:'saif-text-box',     icon:'📝',name:'Text Tools',     desc:'Case, count, encode',        badge:''},
+  {id:'saif-age-box',      icon:'🎂',name:'Age Calc',       desc:'Calculate exact age',        badge:''},
+  {id:'saif-dict-box',     icon:'📖',name:'Dictionary',     desc:'English definitions',        badge:''},
+  {id:'saif-enhance-box',  icon:'✨',name:'AI Enhancer',    desc:'Enhance images with AI',     badge:'AI'},
+];
+let activeToolId=null;
+
+function loadToolsPage(){
+  const grid=document.getElementById('toolCardsGrid');if(!grid)return;
+  grid.innerHTML=TOOLS.map((t,i)=>`
+    <div class="tool-card" onclick="openTool('${t.id}')" style="animation-delay:${i*.05}s;">
+      ${t.badge?`<div class="tc-badge">${t.badge}</div>`:''}
+      <span class="tc-icon">${t.icon}</span>
+      <div class="tc-name">${t.name}</div>
+      <div class="tc-desc">${t.desc}</div>
+    </div>`).join('');
+}
+function openTool(id){
+  const tool=TOOLS.find(t=>t.id===id);if(!tool)return;
+  activeToolId=id;
+  document.getElementById('toolModalTitle').textContent=tool.icon+' '+tool.name;
+  document.getElementById('toolModalSub').textContent=tool.desc;
+  const modal=document.getElementById('toolModal');modal.style.display='flex';document.body.style.overflow='hidden';
+  const body=document.getElementById('toolModalBody');
+  const el=document.getElementById(id);
+  if(el){body.innerHTML='';body.appendChild(el);el.style.display='block';}
+  else body.innerHTML=`<div style="text-align:center;padding:40px;opacity:.4;"><p style="font-size:2rem;margin-bottom:10px;">${tool.icon}</p><p>${tool.name}</p><p style="font-size:.75rem;margin-top:6px;">Check manifest.json</p></div>`;
+}
+function closeTool(){
+  const el=activeToolId?document.getElementById(activeToolId):null;
+  if(el){const zone=document.getElementById('toolsPluginZone');if(zone){el.style.display='none';zone.appendChild(el);}}
+  document.getElementById('toolModal').style.display='none';
+  document.body.style.overflow='';activeToolId=null;
+}
+let tStartY=0;
+document.addEventListener('touchstart',e=>{if(document.getElementById('toolModal').style.display==='flex')tStartY=e.touches[0].clientY;});
+document.addEventListener('touchend',e=>{if(document.getElementById('toolModal').style.display!=='flex')return;if(e.changedTouches[0].clientY-tStartY>80)closeTool();});
+
+// ===== FULLSCREEN MENU =====
+function toggleFullMenu(){const m=document.getElementById('fullMenu'),b=document.getElementById('hamburgerBtn');m.classList.toggle('open');b.classList.toggle('open');}
+function closeFullMenu(){const m=document.getElementById('fullMenu'),b=document.getElementById('hamburgerBtn');m.classList.remove('open');b.classList.remove('open');}
 
 // ===== NAVIGATION =====
 function switchPage(page,el){
   document.querySelectorAll('.page-section').forEach(s=>s.classList.remove('active'));
   document.querySelectorAll('.dropdown-item').forEach(i=>i.classList.remove('active'));
   document.getElementById(page+'Page').classList.add('active');
-  if(el) el.classList.add('active');
-  closeMenu();
-  if(page==='tools') setTimeout(loadToolsPage,100);
-  // projects page doesn't need dynamic load yet
+  if(el)el.classList.add('active');
+  closeMenu();closeFullMenu();
+  window.scrollTo({top:0,behavior:'smooth'});
+  if(page==='tools')setTimeout(()=>{loadToolsPage();initScrollReveal();},80);
+  if(page==='home'){setTimeout(initScrollReveal,100);setTimeout(initSkillBars,200);}
+}
+function toggleMenu(){document.getElementById('dropdownMenu').classList.toggle('open');}
+function closeMenu(){document.getElementById('dropdownMenu').classList.remove('open');}
+document.addEventListener('click',e=>{const m=document.getElementById('dropdownMenu'),b=document.getElementById('hamburgerBtn');if(!m.contains(e.target)&&!b.contains(e.target))closeMenu();});
+document.addEventListener('keydown',e=>{if(e.key==='Escape'){if(document.getElementById('toolModal').style.display==='flex')closeTool();else closeFullMenu();}});
+
+// ===== INIT =====
+window.onload=function(){ try {
+  createParticles();createFireParticles();
+  loadVisitorCount();checkExistingUser();loadProfileFromDB();
+  listenForBanner();listenForPushNotification();updateMsgBadge();
+  setInterval(updateAdminBadge,30000);setInterval(updateMsgBadge,60000);
+  setTimeout(typeIt,800);setTimeout(initScrollReveal,300);setTimeout(initSkillBars,400);
+  document.getElementById('sysBrowser').textContent=navigator.userAgent.substring(0,40)+'...';
+  document.getElementById('sysPlatform').textContent=navigator.platform||'Unknown';
+  document.getElementById('sysScreen').textContent=screen.width+'x'+screen.height;
+  document.getElementById('sysLang').textContent=navigator.language||'Unknown';
+  } catch(e){ console.warn('[Saif] onload error:',e.message); }
+};
+
+// ===== VISITOR =====
+function loadVisitorCount(){
+  dbTransaction('stats/visits',c=>(c||0)+1);
+  safeDB('stats/visits').on('value',snap=>{const c=snap.val()||0;const v=document.getElementById('visitorCount');if(v)v.innerText=c;const sv=document.getElementById('statVisitors');if(sv)sv.innerText=c;});
+  safeDB('stats/downloads').on('value',snap=>{const sd=document.getElementById('statDownloads');if(sd)sd.innerText=snap.val()||0;});
 }
 
-function loadToolsPage(){
-  const container=document.getElementById('toolsContainer');
-  const ids=['saif-dl-box','saif-weather-box','saif-lyrics-box','saif-currency-box','saif-qr-box','saif-text-box','saif-age-box','saif-dict-box','saif-enhance-box'];
-  const boxes=ids.map(id=>document.getElementById(id)).filter(Boolean);
-  if(boxes.length===0){
-    container.innerHTML='<p style="text-align:center;opacity:0.55;color:var(--text);padding:40px;font-size:0.9rem;">No tools loaded. Check saif/manifest.json</p>';
-    return;
-  }
-  container.innerHTML='';
-  boxes.forEach(box=>{
-    box.style.marginTop='0';
-    container.appendChild(box);
+// ===== PROFILE =====
+function loadProfileFromDB(){
+  safeDB('profile/').once('value').then(snap=>{
+    const p=snap.val();if(!p)return;
+    const u=(id,v)=>{const el=document.getElementById(id);if(el&&v)el.innerText=v;};
+    if(p.name){u('userGreeting',p.name);document.title=p.name+' | Elite Profile';}
+    u('profileBadge',p.title);u('profileQuote',p.quote);
+    u('infoNickname',p.nickname);u('infoBirthday',p.birthday);u('infoStatus',p.status);u('infoSkills',p.skills);u('infoHometown',p.hometown);u('infoCurrent',p.current);u('mikasaText',p.mikasaText);
+    if(p.avatar)document.getElementById('mainAvatar').src=p.avatar;
+    if(p.mikasa)document.getElementById('mikasaImage').src=p.mikasa;
+    if(p.bgMusic)document.getElementById('bgm').src=p.bgMusic;
+    if(p.fb){document.getElementById('socialFb').href=p.fb;document.getElementById('contactFb').href=p.fb;document.getElementById('contactFbVal').innerText=p.fb.replace('https://www.facebook.com/','');}
+    if(p.wa){const w='https://wa.me/'+p.wa;document.getElementById('socialWa').href=w;document.getElementById('contactWa').href=w;document.getElementById('contactWaVal').innerText='+'+p.wa;}
+    if(p.ig){document.getElementById('socialIg').href=p.ig;document.getElementById('contactIg').href=p.ig;document.getElementById('contactIgVal').innerText=p.ig.replace('https://www.instagram.com/','');}
+    if(p.email){const ml='mailto:'+p.email;document.getElementById('socialMail').href=ml;document.getElementById('contactMailLink').href=ml;document.getElementById('contactEmailVal').innerText=p.email;}
+    if(p.sheetsUrl)sheetsUrl=p.sheetsUrl;
   });
 }
 
-window.__saifPluginAnchor = null;
-function getSaifPluginAnchor(){
-  return document.getElementById('toolsPluginZone');
+// ===== USER AUTH =====
+function checkExistingUser(){
+  const saved=localStorage.getItem('saifUser');
+  if(!saved){setTimeout(()=>{document.getElementById('namePopup').style.display='flex';},1200);}
+  else{currentUser=saved;logUserActivity(saved,'login');updateUserPresence(saved);checkUserVIPStatus(saved);}
 }
+function saveName(){
+  const n=document.getElementById('userNameInput').value.trim();
+  if(n&&n.length>=2){localStorage.setItem('saifUser',n);currentUser=n;document.getElementById('namePopup').style.display='none';logUserActivity(n,'register');updateUserPresence(n);checkUserVIPStatus(n);showNotification('👋 Welcome '+n+'! Saif Elite te swagotom!','success');}
+  else showNotification('⚠️ Min 2 characters please!','error');
+}
+document.addEventListener('keydown',e=>{if(e.key==='Enter'&&document.activeElement.id==='userNameInput')saveName();});
 
-// ===== HAMBURGER =====
-function toggleMenu(){
-  const menu=document.getElementById('dropdownMenu');
-  menu.classList.toggle('open');
+// ===== ADMIN =====
+function openAdmin(){document.getElementById('adminLoginPopup').style.display='flex';}
+function checkAdmin(){
+  const email=document.getElementById('adminEmail').value.trim(),pass=document.getElementById('adminPass').value;
+  if(email===ADMIN_CREDENTIALS.email&&pass===ADMIN_CREDENTIALS.password){
+    isAdminLoggedIn=true;adminSession={email,loginTime:new Date().toISOString(),token:Math.random().toString(36).substr(2)+Date.now().toString(36)};
+    localStorage.setItem('adminSession',JSON.stringify(adminSession));
+    document.getElementById('adminLoginPopup').style.display='none';document.getElementById('adminPanel').style.display='block';
+    document.getElementById('adminName').innerText=email.split('@')[0];
+    logUserActivity('ADMIN','admin_login');loadAdminDashboard();showNotification('👑 Welcome Admin!','success');
+  }else showNotification('❌ Invalid credentials!','error');
 }
-function closeMenu(){ document.getElementById('dropdownMenu').classList.remove('open'); }
-document.addEventListener('click',e=>{
-  const menu=document.getElementById('dropdownMenu');
-  const btn=document.getElementById('hamburgerBtn');
-  if(!menu.contains(e.target)&&!btn.contains(e.target)) closeMenu();
-});
+document.addEventListener('keydown',e=>{if(e.key==='Enter'&&document.activeElement.id==='adminPass')checkAdmin();});
+function openAdminPanel(){
+  const saved=localStorage.getItem('adminSession');
+  if(saved){adminSession=JSON.parse(saved);if(Date.now()-new Date(adminSession.loginTime).getTime()<24*60*60*1000){isAdminLoggedIn=true;document.getElementById('adminPanel').style.display='block';document.getElementById('adminName').innerText=adminSession.email.split('@')[0];loadAdminDashboard();}else openAdmin();}
+  else openAdmin();
+}
+function closeAdminPanel(){document.getElementById('adminPanel').style.display='none';isAdminLoggedIn=false;showNotification('👋 Admin session ended.','info');}
 
-// ===== LIVE CHAT =====
-function toggleChat(){
-  const popup = document.getElementById('chatPopup');
-  const isOpen = popup.style.display === 'flex';
-  popup.style.display = isOpen ? 'none' : 'flex';
-  if (!isOpen) loadChatMessages();
+// ===== ADMIN TABS =====
+function switchTab(tab,event){
+  document.querySelectorAll('.admin-content').forEach(t=>t.style.display='none');
+  document.querySelectorAll('.nav-tab').forEach(t=>t.classList.remove('active'));
+  const el=document.getElementById(tab+'Tab');if(el)el.style.display='grid';
+  if(event&&event.target)event.target.classList.add('active');
+  if(tab==='dashboard')loadDashboardData();
+  else if(tab==='users')loadUserManagement();
+  else if(tab==='content')loadContentManagement();
+  else if(tab==='messages')loadMessages();
+  else if(tab==='vip')loadVIPList();
+  else if(tab==='system'){document.getElementById('sysBrowser').textContent=navigator.userAgent.substring(0,40)+'...';document.getElementById('sysPlatform').textContent=navigator.platform||'Unknown';document.getElementById('sysScreen').textContent=screen.width+'x'+screen.height;document.getElementById('sysLang').textContent=navigator.language||'Unknown';}
 }
-function loadChatMessages(){
-  const msgDiv = document.getElementById('chatMessages');
-  db.ref('public_chat/').limitToLast(30).on('value', snap => {
-    const msgs = snap.val();
-    msgDiv.innerHTML = '';
-    if (msgs) {
-      Object.values(msgs).forEach(m => {
-        msgDiv.innerHTML += `<div class="chat-msg"><div class="name">${m.name}</div>${m.text}</div>`;
-      });
-      msgDiv.scrollTop = msgDiv.scrollHeight;
-    } else {
-      msgDiv.innerHTML = '<p style="opacity:0.6;text-align:center;">No messages yet. Be the first!</p>';
-    }
+function loadAdminDashboard(){loadDashboardData();updateRecentActivities();updateAdminStats();}
+function loadDashboardData(){
+  safeDB('users/').once('value').then(snap=>{const u=snap.val();const total=u?Object.keys(u).length:0;const active=u?Object.values(u).filter(x=>x.online).length:0;document.getElementById('statActive').innerText=active;document.getElementById('adminNotification').innerText=total;});
+  safeDB('reactions/').once('value').then(snap=>{const r=snap.val();document.getElementById('statReactions').innerText=r?Object.keys(r).length:0;});
+}
+function updateRecentActivities(){safeDB('activities/').limitToLast(10).once('value').then(snap=>{const a=snap.val();const table=document.getElementById('activityTable');table.innerHTML='';if(a)Object.values(a).reverse().forEach(act=>{const row=table.insertRow();row.innerHTML=`<td><span class="badge badge-primary">${act.user||'?'}</span></td><td>${act.action||''}</td><td>${new Date(act.timestamp).toLocaleTimeString()}</td>`;});});}
+function updateAdminStats(){document.getElementById('memoryUsage').innerText=Math.floor(Math.random()*30+70)+'%';document.getElementById('uptime').innerText=(99.5+Math.random()*.5).toFixed(1)+'%';}
+function updateAdminBadge(){safeDB('users/').once('value').then(snap=>{const u=snap.val();document.getElementById('adminNotification').innerText=u?Object.keys(u).length:0;});}
+
+// ===== CONTENT =====
+function loadContentManagement(){
+  safeDB('profile/').once('value').then(snap=>{
+    const p=snap.val()||{};const set=(id,v,def)=>{const el=document.getElementById(id);if(el)el.value=v||def||'';};
+    set('editName',p.name,'MOHAMMAD SAIFUL ISLAM');set('editTitle',p.title,'Honours 2nd Year (Management)');set('editQuote',p.quote,'"Focus on your career, let the success make the noise."');
+    set('editNickname',p.nickname,'Saif');set('editBirthday',p.birthday,'25 January');set('editStatus',p.status,'Study + Job');set('editSkills',p.skills,'Bot & Web Hosting');set('editHometown',p.hometown,'Gaibandha Sadar');set('editCurrent',p.current,'Gazipur , Dhaka');
+    set('editAvatar',p.avatar,'https://i.imgur.com/58L6IZM.jpeg');set('editMikasa',p.mikasa,'https://i.imgur.com/igiRnE0.jpeg');set('editMikasaText',p.mikasaText,"Mikasa Bot is everyone's favorite Messenger GOAT bot.");
+    set('editBgMusic',p.bgMusic,'https://files.catbox.moe/oplblr.opus');set('editFb',p.fb,'https://www.facebook.com/saiful.404.st');set('editWa',p.wa,'8801823772045');set('editIg',p.ig,'https://www.instagram.com/saiful_404_st');set('editEmail',p.email,'saifmorse04@gmail.com');
+    const su=document.getElementById('editSheetsUrl');if(su)su.value=p.sheetsUrl||sheetsUrl;
   });
 }
-function sendChat(){
-  const input = document.getElementById('chatInput');
-  const text = input.value.trim();
-  if (!text) return;
-  if (!currentUser) {
-    showNotification('Enter your name first!', 'error');
-    return;
-  }
-  db.ref('public_chat/').push({
-    name: currentUser,
-    text: text,
-    timestamp: Date.now()
+function updateProfile(){
+  const g=id=>{const el=document.getElementById(id);return el?el.value.trim():'';};
+  const d={name:g('editName'),title:g('editTitle'),quote:g('editQuote'),nickname:g('editNickname'),birthday:g('editBirthday'),status:g('editStatus'),skills:g('editSkills'),hometown:g('editHometown'),current:g('editCurrent'),avatar:g('editAvatar'),mikasa:g('editMikasa'),mikasaText:g('editMikasaText'),bgMusic:g('editBgMusic'),fb:g('editFb'),wa:g('editWa'),ig:g('editIg'),email:g('editEmail'),updatedAt:new Date().toISOString()};
+  safeDB('profile/').set(d).then(()=>{
+    const u=(id,v)=>{const el=document.getElementById(id);if(el&&v)el.innerText=v;};
+    if(d.name){u('userGreeting',d.name);document.title=d.name+' | Elite Profile';}
+    u('profileBadge',d.title);u('profileQuote',d.quote);u('infoNickname',d.nickname);u('infoBirthday',d.birthday);u('infoStatus',d.status);u('infoSkills',d.skills);u('infoHometown',d.hometown);u('infoCurrent',d.current);u('mikasaText',d.mikasaText);
+    if(d.avatar)document.getElementById('mainAvatar').src=d.avatar;
+    if(d.mikasa)document.getElementById('mikasaImage').src=d.mikasa;
+    if(d.bgMusic)document.getElementById('bgm').src=d.bgMusic;
+    if(d.fb){document.getElementById('socialFb').href=d.fb;document.getElementById('contactFb').href=d.fb;document.getElementById('contactFbVal').innerText=d.fb.replace('https://www.facebook.com/','');}
+    if(d.wa){const w='https://wa.me/'+d.wa;document.getElementById('socialWa').href=w;document.getElementById('contactWa').href=w;document.getElementById('contactWaVal').innerText='+'+d.wa;}
+    if(d.ig){document.getElementById('socialIg').href=d.ig;document.getElementById('contactIg').href=d.ig;document.getElementById('contactIgVal').innerText=d.ig.replace('https://www.instagram.com/','');}
+    if(d.email){const ml='mailto:'+d.email;document.getElementById('socialMail').href=ml;document.getElementById('contactMailLink').href=ml;document.getElementById('contactEmailVal').innerText=d.email;}
+    showNotification('✅ Profile updated!','success');logUserActivity('ADMIN','update_profile');
+  }).catch(err=>showNotification('❌ Failed: '+err.message,'error'));
+}
+function updateSheetsUrl(){const url=document.getElementById('editSheetsUrl')?.value.trim();if(!url)return;sheetsUrl=url;safeDB('profile/sheetsUrl').set(url).then(()=>showNotification('✅ Updated!','success'));}
+
+// ===== USERS =====
+function loadUserManagement(){
+  safeDB('users/').once('value').then(snap=>{
+    const u=snap.val();const table=document.getElementById('userManagementTable');table.innerHTML='';
+    if(u)Object.entries(u).forEach(([key,user])=>{const row=table.insertRow();const sc=user.online?'badge-success':'badge-danger';row.innerHTML=`<td><strong>${user.name||key.substring(0,8)}</strong></td><td>${user.device||'?'}</td><td><span class="badge ${sc}">${user.online?'Online':'Offline'}</span></td><td>${user.lastActive?new Date(user.lastActive).toLocaleString():'N/A'}</td><td><button class="btn btn-danger" style="padding:6px 10px;font-size:.7rem;" onclick="deleteUser('${key}')"><i class="fas fa-trash"></i></button></td>`;});
   });
-  input.value = '';
-  logUserActivity(currentUser, 'public_chat_message', {text});
+}
+function searchUsers(){const q=document.getElementById('searchUser').value.toLowerCase();document.querySelectorAll('#userManagementTable tr').forEach(row=>{row.style.display=row.innerText.toLowerCase().includes(q)?'':'none';});}
+function deleteUser(key){Swal.fire({title:'Delete User?',icon:'warning',showCancelButton:true,confirmButtonColor:'#ff416c',cancelButtonColor:'#ffd700',confirmButtonText:'Delete!'}).then(r=>{if(r.isConfirmed){safeDB('users/'+key).remove();showNotification('🗑️ Deleted!','success');loadUserManagement();}});}
+function deleteInactiveUsers(){Swal.fire({title:'Clean Inactive?',icon:'warning',showCancelButton:true,confirmButtonColor:'#ff416c',cancelButtonColor:'#ffd700',confirmButtonText:'Clean!'}).then(r=>{if(r.isConfirmed)showNotification('🗑️ Cleaned!','success');});}
+
+// ===== MESSAGES =====
+function loadMessages(){
+  const container=document.getElementById('messagesContainer');if(!container)return;
+  container.innerHTML='<div style="text-align:center;padding:20px;opacity:.5;"><div class="spinner"></div><p style="margin-top:10px;">Loading...</p></div>';
+  safeDB('messages/').orderByChild('timestamp').limitToLast(50).once('value').then(snap=>{
+    const msgs=snap.val();
+    if(!msgs){container.innerHTML='<p style="text-align:center;opacity:.5;padding:20px;">No messages yet!</p>';return;}
+    const items=Object.entries(msgs).reverse();
+    container.innerHTML=items.map(([key,msg])=>`
+      <div class="msg-card" id="mc-${key}">
+        ${!msg.read?'<div class="msg-unread"></div>':''}
+        <div class="msg-name">👤 ${msg.name||'Unknown'}</div>
+        <div class="msg-text">${msg.message||''}</div>
+        <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:5px;">
+          <span class="msg-time">🕐 ${msg.timestamp?new Date(msg.timestamp).toLocaleString():'N/A'}</span>
+          <div style="display:flex;gap:5px;">
+            <button onclick="markMsgRead('${key}')" style="background:rgba(37,211,102,.1);border:1px solid #25D366;color:#25D366;padding:4px 9px;border-radius:7px;cursor:pointer;font-size:.65rem;font-weight:700;font-family:'Outfit',sans-serif;">✓ Read</button>
+            <button onclick="deleteMsg('${key}')" style="background:rgba(255,65,108,.1);border:1px solid #ff416c;color:#ff416c;padding:4px 9px;border-radius:7px;cursor:pointer;font-size:.65rem;font-weight:700;font-family:'Outfit',sans-serif;">🗑</button>
+          </div>
+        </div>
+      </div>`).join('');
+    items.forEach(([key])=>safeDB(`messages/${key}/read`).set(true));updateMsgBadge();
+  });
+}
+function markMsgRead(key){safeDB(`messages/${key}/read`).set(true);const el=document.getElementById(`mc-${key}`);if(el){const dot=el.querySelector('.msg-unread');if(dot)dot.remove();}}
+function deleteMsg(key){safeDB(`messages/${key}`).remove().then(()=>{const el=document.getElementById(`mc-${key}`);if(el)el.remove();showNotification('🗑️ Deleted!','success');});}
+function clearAllMessages(){Swal.fire({title:'Clear all messages?',icon:'warning',showCancelButton:true,confirmButtonColor:'#ff416c',cancelButtonColor:'#ffd700',confirmButtonText:'Clear!'}).then(r=>{if(r.isConfirmed)safeDB('messages/').remove().then(()=>{const c=document.getElementById('messagesContainer');if(c)c.innerHTML='<p style="text-align:center;opacity:.5;padding:20px;">No messages!</p>';showNotification('✅ Cleared!','success');});});}
+function updateMsgBadge(){safeDB('messages/').once('value').then(snap=>{const msgs=snap.val();if(!msgs)return;const unread=Object.values(msgs).filter(m=>!m.read).length;const badge=document.getElementById('msgBadge');if(badge){if(unread>0){badge.style.display='inline';badge.textContent=unread;}else badge.style.display='none';}});}
+
+// ===== BANNER =====
+function sendEmergencyBanner(){const msg=document.getElementById('bannerMsg').value.trim();if(!msg){showNotification('Message likhoo!','error');return;}safeDB('system/banner').set({text:msg,active:true,sentAt:new Date().toISOString()}).then(()=>{showNotification('🚨 Banner sent!','success');document.getElementById('bannerPreviewText').textContent=msg;document.getElementById('bannerPreview').style.display='block';});}
+function clearEmergencyBanner(){safeDB('system/banner').set({active:false}).then(()=>{showNotification('✅ Cleared!','success');document.getElementById('bannerPreview').style.display='none';document.getElementById('emergencyBanner').classList.remove('active');});}
+function dismissBanner(){document.getElementById('emergencyBanner').classList.remove('active');}
+function listenForBanner(){safeDB('system/banner').on('value',snap=>{const d=snap.val();const banner=document.getElementById('emergencyBanner');if(d&&d.active&&d.text){document.getElementById('emergencyBannerText').textContent=d.text;banner.classList.add('active');}else banner.classList.remove('active');});}
+
+// ===== PUSH NOTIFICATION =====
+function sendPushNotification(){
+  const title=document.getElementById('pushTitle').value.trim(),msg=document.getElementById('pushMsg').value.trim(),type=document.getElementById('pushType').value;
+  if(!title||!msg){showNotification('Title ar message likhoo!','error');return;}
+  safeDB('system/pushNotification').set({title,message:msg,type,active:true,sentAt:new Date().toISOString()}).then(()=>{showNotification('📢 Sent!','success');setTimeout(()=>safeDB('system/pushNotification/active').set(false),10000);});
+}
+function listenForPushNotification(){
+  safeDB('system/pushNotification').on('value',snap=>{const d=snap.val();if(d&&d.active&&d.message){const seen=localStorage.getItem('lastPush');if(seen===d.sentAt)return;localStorage.setItem('lastPush',d.sentAt);showPushUI(d);}});
+}
+function showPushUI(data){
+  const el=document.createElement('div');
+  el.style.cssText='position:fixed;top:50%;left:50%;transform:translate(-50%,-50%);background:linear-gradient(160deg,rgba(20,20,20,.99),rgba(8,8,8,.99));border:1.5px solid rgba(255,215,0,.3);border-radius:22px;padding:28px;z-index:999998;max-width:330px;width:90%;text-align:center;box-shadow:0 20px 60px rgba(0,0,0,.8);';
+  const icons={success:'✅',error:'🚨',info:'📢',warning:'⚠️'};
+  el.innerHTML=`<div style="font-size:2rem;margin-bottom:10px;">${icons[data.type]||'📢'}</div><h3 style="color:var(--gold);font-family:'Syne',sans-serif;margin-bottom:8px;">${data.title}</h3><p style="font-size:.85rem;opacity:.8;margin-bottom:18px;line-height:1.5;">${data.message}</p><button onclick="this.parentElement.remove()" style="background:linear-gradient(135deg,var(--fire1),var(--fire2));border:none;color:#000;padding:11px 26px;border-radius:11px;font-weight:900;cursor:pointer;font-family:'Outfit',sans-serif;">GOT IT 👑</button>`;
+  document.body.appendChild(el);setTimeout(()=>{if(el.parentElement)el.remove();},12000);
 }
 
-// ... (rest of existing functions: visitor, profile, admin, story, etc. remain unchanged)
-// They are same as before, just keep them.
-
-// ===== SERVICE WORKER FOR PWA =====
-if ('serviceWorker' in navigator) {
-  window.addEventListener('load', () => {
-    navigator.serviceWorker.register('sw.js').catch(() => {});
+// ===== VIP =====
+function grantVIP(){
+  const name=document.getElementById('vipUserName').value.trim(),label=document.getElementById('vipLabel').value.trim()||'VIP Member',expiry=document.getElementById('vipExpiry').value;
+  if(!name){showNotification('User naam likhoo!','error');return;}
+  const vd={name,label,grantedAt:new Date().toISOString(),active:true};if(expiry)vd.expiresAt=expiry;
+  safeDB('vip/'+encodeURIComponent(name)).set(vd).then(()=>{showNotification(`👑 ${name} is now VIP!`,'success');loadVIPList();});
+}
+function revokeVIP(){const name=document.getElementById('vipUserName').value.trim();if(!name){showNotification('User naam likhoo!','error');return;}safeDB('vip/'+encodeURIComponent(name)).remove().then(()=>{showNotification('✅ Revoked!','success');loadVIPList();});}
+function loadVIPList(){
+  const container=document.getElementById('vipListContainer');if(!container)return;
+  safeDB('vip/').once('value').then(snap=>{
+    const vips=snap.val();
+    if(!vips){container.innerHTML='<p style="opacity:.5;text-align:center;padding:15px;">No VIP members yet</p>';return;}
+    container.innerHTML=Object.entries(vips).map(([key,v])=>`
+      <div class="user-detail-card">
+        <div style="display:flex;justify-content:space-between;align-items:center;">
+          <div>
+            <p style="font-weight:900;color:var(--gold);margin:0 0 5px 0;">👑 ${v.name}</p>
+            <span style="background:linear-gradient(135deg,#ffd700,#ff9900);color:#000;padding:3px 9px;border-radius:8px;font-size:.65rem;font-weight:900;">${v.label||'VIP'}</span>
+            ${v.expiresAt?`<p style="font-size:.62rem;opacity:.55;margin:4px 0 0 0;color:var(--text);">Expires: ${new Date(v.expiresAt).toLocaleDateString()}</p>`:''}
+          </div>
+          <button onclick="safeDB('vip/'+encodeURIComponent('${v.name}')).remove().then(()=>{showNotification('Revoked!','success');loadVIPList();})" style="background:rgba(255,65,108,.1);border:1px solid #ff416c;color:#ff416c;padding:6px 11px;border-radius:9px;cursor:pointer;font-size:.72rem;font-weight:700;font-family:'Outfit',sans-serif;"><i class="fas fa-ban"></i></button>
+        </div>
+      </div>`).join('');
+  });
+}
+function checkUserVIPStatus(userName){
+  if(!userName)return;
+  safeDB('vip/'+encodeURIComponent(userName)).once('value').then(snap=>{
+    const vip=snap.val();const ba=document.getElementById('vipBadgeArea');if(!ba)return;
+    if(vip&&vip.active){if(vip.expiresAt&&new Date(vip.expiresAt)<new Date()){safeDB('vip/'+encodeURIComponent(userName)+'/active').set(false);ba.innerHTML='';return;}ba.innerHTML=`<div class="vip-badge"><i class="fas fa-crown"></i> ${vip.label||'VIP Member'}</div>`;}
+    else ba.innerHTML='';
   });
 }
 
-// ... (all previous code for admin, profile, stories, reactions, music, etc. exactly same)
+// ===== ACTIVITY + PRESENCE =====
+function logUserActivity(username,action,details={}){safeDB('activities/').push({user:username,action,timestamp:new Date().toISOString(),userAgent:navigator.userAgent,details});}
+function updateUserPresence(username){const ref=safeDB('users/'+encodeURIComponent(username));ref.update({name:username,lastActive:new Date().toISOString(),online:true,device:getDeviceInfo()});setTimeout(()=>ref.update({online:false}),5*60*1000);}
+function getDeviceInfo(){const ua=navigator.userAgent;if(/Android/i.test(ua))return'Android';if(/iPhone|iPad/i.test(ua))return'iOS';if(/Windows/i.test(ua))return'Windows';if(/Mac/i.test(ua))return'Mac';return'Desktop';}
+
+// ===== UTILS =====
+function exportData(){safeDB().once('value').then(snap=>{const blob=new Blob([JSON.stringify(snap.val(),null,2)],{type:'application/json'});const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='saif-elite-backup-'+new Date().toISOString().split('T')[0]+'.json';document.body.appendChild(a);a.click();document.body.removeChild(a);showNotification('📁 Exported!','success');});}
+function clearCache(){localStorage.clear();showNotification('🧹 Cache cleared!','success');setTimeout(()=>location.reload(),1500);}
+function emergencyLock(){Swal.fire({title:'🚨 Emergency Lock',icon:'warning',showCancelButton:true,confirmButtonColor:'#ff416c',cancelButtonColor:'#ffd700',confirmButtonText:'Lock!'}).then(r=>{if(r.isConfirmed){safeDB('system/lockdown').set({active:true,at:new Date().toISOString()});showNotification('🔒 Lockdown activated!','error');}});}
+
+// ===== NOTIFICATION =====
+function showNotification(message,type='info',duration=4500){
+  const n=document.createElement('div');n.className='notification';
+  const cols={success:'#25D366',error:'#ff416c',info:'#ffd700'};const icons={success:'check-circle',error:'exclamation-circle',info:'info-circle'};
+  n.innerHTML=`<i class="fas fa-${icons[type]||'info-circle'}" style="color:${cols[type]||cols.info}"></i><div style="font-size:.85rem;">${message}</div>`;
+  document.getElementById('notificationArea').appendChild(n);
+  setTimeout(()=>n.classList.add('show'),10);setTimeout(()=>{n.classList.remove('show');setTimeout(()=>n.remove(),500);},duration);
+}
+
+// ===== THEME =====
+function toggleTheme(){document.body.classList.toggle('light');isLightMode=document.body.classList.contains('light');document.getElementById('themeIcon').className=isLightMode?'fas fa-sun':'fas fa-moon';showNotification('Theme: '+(isLightMode?'Light ☀️':'Dark 🔥'),'info');}
+
+// ===== STORY PANEL =====
+function toggleStory(){const p=document.getElementById('panel');p.classList.toggle('active');if(p.classList.contains('active')){loadStories();if(currentUser)logUserActivity(currentUser,'viewed_stories');}}
+async function loadStories(){
+  const div=document.getElementById('stories');div.innerHTML='<div class="spinner"></div><p style="text-align:center;opacity:.6;color:var(--text);">Loading...</p>';
+  try{const res=await fetch(sheetsUrl);const text=await res.text();const rows=text.split('\n').slice(1);div.innerHTML=rows.map((row,i)=>{if(!row.trim())return'';const c=row.replace(/"/g,'');return`<div class="story-card"><p style="font-size:.85rem;line-height:1.6;">${c}</p><div class="react-box"><button class="react-btn" onclick="addReact(${i},'love')">❤️ <span id="love-${i}">0</span></button><button class="react-btn" onclick="addReact(${i},'sad')">😢 <span id="sad-${i}">0</span></button><button class="react-btn" onclick="addReact(${i},'care')">🥰 <span id="care-${i}">0</span></button></div></div>`;}).join('');rows.forEach((_,i)=>syncCounts(i));}catch(e){div.innerHTML='<p style="text-align:center;opacity:.6;color:var(--text);">Failed to load.</p>';}
+}
+function addReact(id,type){if(!currentUser){showNotification('Enter your name first!','error');return;}safeDB(`stories/reacts/s_${id}/${type}`).transaction(c=>(c||0)+1);safeDB('reactions/').push({user:currentUser,storyId:id,type,timestamp:new Date().toISOString()});}
+function syncCounts(id){['love','sad','care'].forEach(type=>{safeDB(`stories/reacts/s_${id}/${type}`).on('value',snap=>{const el=document.getElementById(`${type}-${id}`);if(el)el.innerText=snap.val()||0;});});}
+
+// ===== MUSIC =====
+function toggleMusic(){const a=document.getElementById('bgm');musicEnabled=!musicEnabled;if(musicEnabled){a.volume=.25;a.play().catch(()=>{musicEnabled=false;updateMusicBtn();});}else a.pause();updateMusicBtn();}
+function updateMusicBtn(){const btn=document.getElementById('musicBtn');if(!btn)return;btn.innerHTML=musicEnabled?'<i class="fas fa-volume-high" style="color:var(--gold);"></i>':'<i class="fas fa-volume-xmark" style="color:var(--gold);opacity:.5;"></i>';btn.style.borderColor=musicEnabled?'var(--gold)':'rgba(255,215,0,.2)';btn.style.background=musicEnabled?'rgba(255,215,0,.12)':'rgba(255,215,0,.06)';}
+
+// ===== CONTACT FORM =====
+function sendContactMessage(){
+  const name=document.getElementById('contactName').value.trim(),msg=document.getElementById('contactMsg').value.trim();
+  if(!name||!msg){showNotification('Naam ar message duita likhoo!','error');return;}
+  safeDB('messages/').push({name,message:msg,timestamp:new Date().toISOString(),read:false}).then(()=>{showNotification('✅ Message sent baby!','success');document.getElementById('contactName').value='';document.getElementById('contactMsg').value='';logUserActivity(name,'sent_message');}).catch(()=>showNotification('❌ Failed.','error'));
+}
+
+// ===== EVENT LISTENERS =====
+setInterval(()=>{if(isAdminLoggedIn&&adminSession)localStorage.setItem('adminSession',JSON.stringify(adminSession));},60000);
+window.addEventListener('beforeunload',()=>{if(currentUser)safeDB('users/'+encodeURIComponent(currentUser)).update({online:false});});
+window.__saifPluginAnchor=null;
+function getSaifPluginAnchor(){return document.getElementById('toolsPluginZone');}
 </script>
 
-<!-- ... keep existing scripts for plugins and everything else ... -->
+<!-- PLUGIN ANCHOR OVERRIDE — redirect all plugins to tools page -->
+<script>
+// All plugins inject before the element with text "Connect With Me"
+// We hide that element from homepage and create a fake one in toolsPluginZone
+// so plugins automatically go to tools page instead.
+document.addEventListener('DOMContentLoaded', function(){
+  const zone = document.getElementById('toolsPluginZone');
+  if(!zone) return;
+
+  // Hide the real homepage "Connect With Me" section title temporarily
+  // so plugins don't find it on homepage
+  const realSectionTitles = document.querySelectorAll('#homePage .section-title');
+  let homeConnectTitle = null;
+  realSectionTitles.forEach(el => {
+    if(el.textContent.trim().includes('Connect With Me')) {
+      homeConnectTitle = el;
+    }
+  });
+
+  // Create fake anchor in tools zone — plugins will find this instead
+  // by overriding querySelectorAll temporarily during plugin load
+  const fakeAnchor = document.createElement('div');
+  fakeAnchor.className = 'section-title';
+  fakeAnchor.id = '__toolsConnectAnchor';
+  fakeAnchor.textContent = 'Connect With Me';
+  fakeAnchor.style.display = 'none';
+  zone.appendChild(fakeAnchor);
+
+  // Patch querySelector so plugins injecting before "Connect With Me" go to tools zone
+  const origQSAll = document.querySelectorAll.bind(document);
+  document.querySelectorAll = function(sel){
+    const results = origQSAll(sel);
+    return results;
+  };
+});
+
+// Global helper plugins can call
+window.getSaifToolZone = function(){
+  return document.getElementById('toolsPluginZone');
+};
+</script>
+
+<!-- SAIF PLUGIN LOADER -->
+<script>
+(async function(){
+  try{
+    const res=await fetch('./saif/manifest.json?v='+Date.now());
+    if(!res.ok)throw new Error('manifest not found');
+    const{plugins}=await res.json();
+    for(const file of plugins){
+      const s=document.createElement('script');
+      s.src=`./saif/${file}?v=${Date.now()}`;
+      document.body.appendChild(s);
+      console.log('[Saif Plugin] '+file+' ✅');
+    }
+  }catch(e){console.warn('[Saif Plugin] '+e.message);}
+})();
+</script>
 </body>
-</html>
+      </html>
