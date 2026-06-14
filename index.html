@@ -296,62 +296,104 @@ textarea { resize:vertical; }
 /* ===== MAIN WRAP + CARD ===== */
 .wrap { max-width:520px; margin:100px auto 60px; padding:18px; position:relative; z-index:1; }
 .card {
-  background:var(--card-bg); border-radius:36px; padding:50px 24px 36px; text-align:center;
+  background:var(--card-bg); border-radius:36px; padding:16px 24px 36px; text-align:center;
   box-shadow:0 40px 120px rgba(0,0,0,0.9), 0 0 0 1px rgba(255,215,0,0.1), 0 0 60px rgba(255,102,0,0.05) inset;
   position:relative; backdrop-filter:blur(20px); border:1px solid rgba(255,215,0,0.12);
+  overflow:hidden;
 }
-/* Fire top line */
+/* Fire top line flicker */
 .card::before {
-  content:''; position:absolute; top:0; left:8%; right:8%; height:2px;
+  content:''; position:absolute; top:0; left:0; right:0; height:2px;
   background:linear-gradient(90deg,transparent,var(--fire1),var(--gold),var(--fire2),var(--fire1),transparent);
-  background-size:200% auto; border-radius:36px 36px 0 0;
-  animation:shine 2.5s linear infinite;
+  background-size:200% auto;
+  animation:shine 2.5s linear infinite, fireFlicker 1.8s ease-in-out infinite alternate;
+}
+@keyframes fireFlicker {
+  0%   { opacity:0.5; filter:blur(0px); }
+  25%  { opacity:1;   filter:blur(0.5px); }
+  50%  { opacity:0.7; filter:blur(0px); }
+  75%  { opacity:1;   filter:blur(1px); }
+  100% { opacity:0.6; filter:blur(0px); }
+}
+
+/* ===== COVER IMAGE ===== */
+.card-cover {
+  position:relative; width:calc(100% + 48px); margin:-16px -24px 0;
+  height:140px; overflow:hidden; border-radius:36px 36px 0 0;
+}
+.card-cover img {
+  width:100%; height:100%; object-fit:cover; display:block;
+  filter:brightness(0.75) saturate(1.2);
+}
+/* Fire overlay on cover */
+.card-cover::after {
+  content:''; position:absolute; inset:0;
+  background:linear-gradient(to bottom,rgba(255,80,0,0.15),rgba(8,8,8,0.85));
 }
 
 /* ===== AVATAR ===== */
-.avatarBox { position:absolute; top:-85px; left:50%; transform:translateX(-50%); width:165px; height:165px; z-index:10; }
+.avatarBox {
+  position:relative; width:155px; height:155px;
+  margin:-78px auto 0; z-index:10;
+}
 
-/* Fire ring animation */
+/* Fire ring - flickering */
 .fire-ring {
   position:absolute; inset:-16px; border-radius:50%;
-  background:conic-gradient(from 0deg,#ff3300,#ff6600,#ff9900,#ffcc00,#ff9900,#ff6600,#ff3300);
-  animation:ringRotate 2s linear infinite; z-index:-1; filter:blur(3px);
+  background:conic-gradient(from 0deg,#ff2200,#ff6600,#ffaa00,#ffdd00,#ffaa00,#ff6600,#ff2200);
+  animation:ringRotate 2s linear infinite, fireRingFlicker 1.2s ease-in-out infinite alternate;
+  z-index:-1; filter:blur(3px);
 }
 .fire-ring-2 {
-  position:absolute; inset:-8px; border-radius:50%;
-  background:conic-gradient(from 180deg,#ff6600,#ffcc00,#ff6600);
-  animation:ringRotate 1.5s linear infinite reverse; z-index:-1; filter:blur(1px); opacity:0.6;
+  position:absolute; inset:-9px; border-radius:50%;
+  background:conic-gradient(from 180deg,#ff6600,#ffcc00,#ff3300,#ffcc00,#ff6600);
+  animation:ringRotate 1.4s linear infinite reverse, fireRingFlicker2 0.9s ease-in-out infinite alternate;
+  z-index:-1; filter:blur(1.5px); opacity:0.7;
 }
 .fire-ring-3 {
   position:absolute; inset:-4px; border-radius:50%;
   background:var(--bg); z-index:-1; transition:background 0.4s;
 }
 @keyframes ringRotate { to { transform:rotate(360deg); } }
+@keyframes fireRingFlicker {
+  0%   { opacity:0.75; filter:blur(2px) brightness(0.9); }
+  30%  { opacity:1;    filter:blur(4px) brightness(1.3); }
+  60%  { opacity:0.85; filter:blur(2.5px) brightness(1); }
+  100% { opacity:1;    filter:blur(3.5px) brightness(1.4); }
+}
+@keyframes fireRingFlicker2 {
+  0%   { opacity:0.5; filter:blur(1px); }
+  40%  { opacity:0.8; filter:blur(2px); }
+  100% { opacity:0.6; filter:blur(1.5px); }
+}
 
-/* Avatar glow */
+/* Avatar glow flicker */
 .avatarBox::after {
-  content:''; position:absolute; inset:-30px; border-radius:50%;
-  background:radial-gradient(circle,rgba(255,102,0,0.3),rgba(255,215,0,0.15),transparent 68%);
-  animation:avatarFireAura 2s ease-in-out infinite alternate; z-index:-2;
+  content:''; position:absolute; inset:-35px; border-radius:50%;
+  background:radial-gradient(circle,rgba(255,102,0,0.35),rgba(255,200,0,0.15),transparent 65%);
+  animation:avatarFireAura 1.5s ease-in-out infinite alternate; z-index:-2;
 }
 @keyframes avatarFireAura {
-  from { opacity:0.4; transform:scale(0.9); }
-  to   { opacity:1;   transform:scale(1.12); }
+  0%   { opacity:0.3; transform:scale(0.88); }
+  50%  { opacity:0.9; transform:scale(1.08); }
+  100% { opacity:0.6; transform:scale(1.0); }
 }
 .avatar {
   width:100%; height:100%; border-radius:50%; object-fit:cover;
-  border:3px solid rgba(255,215,0,0.6);
-  box-shadow:0 0 35px rgba(255,102,0,0.7), 0 0 70px rgba(255,215,0,0.3) inset;
-  animation:avatarFireGlow 2s infinite alternate;
+  border:3px solid rgba(255,200,0,0.65);
+  box-shadow:0 0 30px rgba(255,102,0,0.6), 0 0 60px rgba(255,215,0,0.2) inset;
+  animation:avatarFireGlow 1.6s ease-in-out infinite alternate;
 }
 @keyframes avatarFireGlow {
-  from { box-shadow:0 0 35px rgba(255,102,0,0.5), 0 0 60px rgba(255,215,0,0.2) inset; }
-  to   { box-shadow:0 0 55px rgba(255,102,0,0.9), 0 0 90px rgba(255,215,0,0.4) inset; }
+  0%   { box-shadow:0 0 25px rgba(255,80,0,0.4),  0 0 50px rgba(255,180,0,0.15) inset; }
+  33%  { box-shadow:0 0 50px rgba(255,120,0,0.9),  0 0 80px rgba(255,220,0,0.35) inset; }
+  66%  { box-shadow:0 0 35px rgba(255,60,0,0.55),  0 0 60px rgba(255,200,0,0.2) inset; }
+  100% { box-shadow:0 0 55px rgba(255,150,0,1.0),  0 0 90px rgba(255,230,0,0.4) inset; }
 }
 
 /* ===== TYPOGRAPHY ===== */
 h1 {
-  margin-top:48px; font-family:'Syne',sans-serif;
+  margin-top:12px; font-family:'Syne',sans-serif;
   font-size:1.95rem; font-weight:800; letter-spacing:-0.5px;
   background:linear-gradient(90deg,var(--fire1),var(--gold),#fff,var(--gold),var(--fire1));
   background-size:200% auto; -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text;
@@ -465,7 +507,7 @@ body.light h1 {
 }
 </style>
 </head>
-<body onclick="playMusic()">
+<body>
 
 <!-- Rain Canvas -->
 <canvas class="rain-canvas" id="rainCanvas"></canvas>
@@ -494,6 +536,9 @@ body.light h1 {
     </div>
     <div class="ctrl-btn" onclick="toggleTheme()" title="Theme">
       <i id="themeIcon" class="fas fa-moon" style="color:var(--gold);"></i>
+    </div>
+    <div class="ctrl-btn" onclick="toggleMusic()" title="Music" id="musicBtn">
+      <i class="fas fa-volume-xmark" style="color:var(--gold);"></i>
     </div>
   </div>
 
@@ -694,12 +739,19 @@ body.light h1 {
 <div id="homePage" class="page-section active">
 <div class="wrap">
 <div class="card">
+  <!-- Cover Image -->
+  <div class="card-cover">
+    <img src="https://i.imgur.com/zq5JFC5.jpeg" id="coverImage" alt="Cover">
+  </div>
+
   <div class="avatarBox">
     <div class="fire-ring"></div>
     <div class="fire-ring-2"></div>
     <div class="fire-ring-3"></div>
     <img src="https://i.imgur.com/58L6IZM.jpeg" class="avatar" id="mainAvatar">
   </div>
+
+  <div style="margin-top:90px;"></div>
 
   <h1 id="userGreeting">MOHAMMAD SAIFUL ISLAM</h1>
   <div class="profile-badge" id="profileBadge">Honours 2nd Year (Management)</div>
@@ -762,12 +814,9 @@ body.light h1 {
 <div id="toolsPage" class="page-section">
 <div class="wrap" style="margin-top:85px;">
   <div class="section-title" style="margin-bottom:20px;"><i class="fas fa-fire"></i> Elite Tools</div>
-  <div id="toolsContainer">
-    <div style="text-align:center;padding:50px;opacity:0.5;color:var(--text);">
-      <div class="spinner"></div>
-      <p style="margin-top:14px;">Loading tools...</p>
-    </div>
-  </div>
+  <!-- Plugins inject here directly -->
+  <div id="toolsPluginZone" style="display:flex;flex-direction:column;gap:20px;"></div>
+  <div id="toolsContainer"></div>
 </div>
 </div>
 
@@ -925,7 +974,17 @@ function loadToolsPage(){
     return;
   }
   container.innerHTML='';
-  boxes.forEach(box=>{const clone=box.cloneNode(true);clone.style.marginTop='0';container.appendChild(clone);box.remove();});
+  boxes.forEach(box=>{
+    box.style.marginTop='0';
+    container.appendChild(box);
+  });
+}
+
+// Override plugin anchor — plugins inject into toolsPluginAnchor instead of homepage
+window.__saifPluginAnchor = null;
+function getSaifPluginAnchor(){
+  // Return tools page container as anchor for plugins
+  return document.getElementById('toolsPluginZone');
 }
 
 // ===== HAMBURGER =====
@@ -1229,7 +1288,27 @@ function syncCounts(id){
 }
 
 // ===== MUSIC =====
-function playMusic(){const a=document.getElementById('bgm');if(a.paused){a.volume=0.25;a.play().catch(()=>{});}}
+let musicEnabled = false;
+function toggleMusic(){
+  const a=document.getElementById('bgm');
+  const btn=document.getElementById('musicBtn');
+  musicEnabled=!musicEnabled;
+  if(musicEnabled){
+    a.volume=0.25;a.play().catch(()=>{musicEnabled=false;updateMusicBtn();});
+  }else{
+    a.pause();
+  }
+  updateMusicBtn();
+}
+function updateMusicBtn(){
+  const btn=document.getElementById('musicBtn');
+  if(!btn)return;
+  btn.innerHTML=musicEnabled
+    ?'<i class="fas fa-volume-high" style="color:var(--gold);"></i>'
+    :'<i class="fas fa-volume-xmark" style="color:var(--gold);opacity:0.5;"></i>';
+  btn.style.borderColor=musicEnabled?'var(--gold)':'rgba(255,215,0,0.2)';
+  btn.style.background=musicEnabled?'rgba(255,215,0,0.12)':'rgba(255,215,0,0.06)';
+}
 
 // ===== CONTACT FORM =====
 function sendContactMessage(){
@@ -1245,10 +1324,50 @@ function sendContactMessage(){
 }
 
 // ===== EVENT LISTENERS =====
-document.addEventListener('click',playMusic);
-document.addEventListener('touchstart',playMusic);
 setInterval(()=>{if(isAdminLoggedIn&&adminSession)localStorage.setItem('adminSession',JSON.stringify(adminSession));},60000);
 window.addEventListener('beforeunload',()=>{if(currentUser)db.ref('users/'+encodeURIComponent(currentUser)).update({online:false});});
+</script>
+
+<!-- PLUGIN ANCHOR OVERRIDE — redirect all plugins to tools page -->
+<script>
+// All plugins inject before the element with text "Connect With Me"
+// We hide that element from homepage and create a fake one in toolsPluginZone
+// so plugins automatically go to tools page instead.
+document.addEventListener('DOMContentLoaded', function(){
+  const zone = document.getElementById('toolsPluginZone');
+  if(!zone) return;
+
+  // Hide the real homepage "Connect With Me" section title temporarily
+  // so plugins don't find it on homepage
+  const realSectionTitles = document.querySelectorAll('#homePage .section-title');
+  let homeConnectTitle = null;
+  realSectionTitles.forEach(el => {
+    if(el.textContent.trim().includes('Connect With Me')) {
+      homeConnectTitle = el;
+    }
+  });
+
+  // Create fake anchor in tools zone — plugins will find this instead
+  // by overriding querySelectorAll temporarily during plugin load
+  const fakeAnchor = document.createElement('div');
+  fakeAnchor.className = 'section-title';
+  fakeAnchor.id = '__toolsConnectAnchor';
+  fakeAnchor.textContent = 'Connect With Me';
+  fakeAnchor.style.display = 'none';
+  zone.appendChild(fakeAnchor);
+
+  // Patch querySelector so plugins injecting before "Connect With Me" go to tools zone
+  const origQSAll = document.querySelectorAll.bind(document);
+  document.querySelectorAll = function(sel){
+    const results = origQSAll(sel);
+    return results;
+  };
+});
+
+// Global helper plugins can call
+window.getSaifToolZone = function(){
+  return document.getElementById('toolsPluginZone');
+};
 </script>
 
 <!-- SAIF PLUGIN LOADER -->
