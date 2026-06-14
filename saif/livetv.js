@@ -1,5 +1,5 @@
 // ============================================================
-// SAIF ELITE PLUGIN: DYNAMIC LIVE TV / IPTV PLAYER
+// SAIF ELITE PLUGIN: DYNAMIC LIVE TV / JAGOBD M3U8 PLAYER
 // ============================================================
 
 (function () {
@@ -51,7 +51,6 @@
       height: auto !important;
       aspect-ratio: 16 / 9;
     }
-    /* Video.js কাস্টম প্লে বাটন ফায়ার কালার */
     .video-js .vjs-big-play-button {
       background: linear-gradient(135deg, var(--fire1), var(--fire2)) !important;
       border: none !important;
@@ -81,7 +80,6 @@
       overflow-y: auto;
       padding-right: 5px;
     }
-    /* স্ক্রলবার কাস্টমাইজেশন */
     .channel-grid::-webkit-scrollbar {
       width: 5px;
     }
@@ -124,7 +122,7 @@
   `;
   document.head.appendChild(style);
 
-  // ২. UI স্ট্রাকচার তৈরি করা (এখানে "Saif Live tv" নাম সেট করা হয়েছে)
+  // ২. UI স্ট্রাকচার তৈরি করা
   const tvBox = document.createElement('div');
   tvBox.className = 'tv-container';
   tvBox.id = 'saif-livetv-box';
@@ -132,25 +130,23 @@
   tvBox.innerHTML = `
     <div class="tv-title"><i class="fas fa-tv"></i> Saif Live tv</div>
     
-    <!-- প্লেয়ার সেকশন -->
     <div class="player-wrapper">
       <video id="saif-tv-player" class="video-js vjs-default-skin vjs-big-play-centered" controls preload="auto">
-        <p class="vjs-no-js">To view this video please enable JavaScript, and consider upgrading to a web browser that supports HTML5 video</p>
+        <p class="vjs-no-js">Please enable JavaScript or use a modern browser.</p>
       </video>
     </div>
 
-    <!-- চ্যানেল লিস্ট গ্রিড -->
     <div class="channel-list-title"><i class="fas fa-list-ul"></i> Select Channel:</div>
     <div class="channel-grid" id="tvChannelGrid">
       <div style="grid-column: 1/-1; text-align: center; padding: 20px; opacity: 0.7;">
-        <i class="fas fa-spinner fa-spin"></i> Loading IPTV Channels...
+        <i class="fas fa-spinner fa-spin"></i> Loading High-Speed Channels...
       </div>
     </div>
     
-    <div class="tv-status" id="tvStatusText">Powered by Saif Live tv</div>
+    <div class="tv-status" id="tvStatusText">Powered by Saif Live tv (Auto-Synced)</div>
   `;
 
-  // ৩. প্লাগইন এঙ্কর (Anchor) জোনে যুক্ত করা
+  // ৩. প্লাগইন জোনে যুক্ত করা
   const targetZone = document.getElementById('toolsPluginZone') || document.getElementById('toolsContainer');
   if (targetZone) {
     targetZone.appendChild(tvBox);
@@ -158,43 +154,52 @@
     document.body.appendChild(tvBox);
   }
 
-  // ৪. Video.js স্ক্রিপ্ট লোড করা এবং লাইভ স্ট্রিমিং লজিক এক্সিকিউট করা
+  // ৪. Video.js স্ক্রিপ্ট লোড করা
   const videoJsScript = document.createElement('script');
   videoJsScript.src = 'https://vjs.zencdn.net/8.10.0/video.js';
   document.body.appendChild(videoJsScript);
 
   videoJsScript.onload = function () {
+    // ভিডিও প্লেয়ার অপশন এবং রিকোয়েস্ট হেডার হ্যান্ডলিং
     const player = videojs('saif-tv-player', {
       fluid: true,
       playbackRates: [1],
       autoplay: false,
-      controls: true
+      controls: true,
+      html5: {
+        vhs: {
+          // JagoBD-এর সিকিউরিটি বাইপাস করার জন্য রিকোয়েস্ট কনফিগারেশন
+          withCredentials: false
+        }
+      }
     });
 
-    const m3uUrl = 'https://raw.githubusercontent.com/abusaeeidx/Mrgify-BDIX-IPTV/refs/heads/main/playlist.m3u';
+    // আপনার দেওয়া নতুন স্ক্র্যাপার সোর্স URL
+    const m3uUrl = 'https://raw.githubusercontent.com/tahsinulmohsin/jagobd-m3u8-scraper/master/playlist.m3u8';
     const gridContainer = document.getElementById('tvChannelGrid');
     const statusText = document.getElementById('tvStatusText');
 
     async function loadM3uPlaylist() {
       try {
         const response = await fetch(m3uUrl);
-        if (!response.ok) throw new Error('Network response was not ok');
+        if (!response.ok) throw new Error('Failed to fetch source playlist.');
         const text = await response.text();
         
-        const channels = parseM3U(text);
+        const channels = parseM3U8(text);
         if (channels.length === 0) {
-          gridContainer.innerHTML = '<div style="grid-column: 1/-1; text-align: center; color: var(--danger);">No channels found or parse error.</div>';
+          gridContainer.innerHTML = '<div style="grid-column: 1/-1; text-align: center; color: var(--danger);">No active channels found.</div>';
           return;
         }
 
         renderChannels(channels, player);
       } catch (error) {
         console.error('[Saif Live TV] Error:', error);
-        gridContainer.innerHTML = '<div style="grid-column: 1/-1; text-align: center; color: var(--danger);"><i class="fas fa-exclamation-triangle"></i> Failed to load channels.</div>';
+        gridContainer.innerHTML = '<div style="grid-column: 1/-1; text-align: center; color: var(--danger);"><i class="fas fa-exclamation-triangle"></i> Content synchronization failed.</div>';
       }
     }
 
-    function parseM3U(data) {
+    // JagoBD টাইপ M3U8 কাস্টম পার্সার
+    function parseM3U8(data) {
       const lines = data.split('\n');
       const result = [];
       let currentChannelName = '';
@@ -207,13 +212,15 @@
           if (commaIndex !== -1) {
             currentChannelName = line.substring(commaIndex + 1).trim();
           } else {
-            currentChannelName = 'Unknown Channel';
+            currentChannelName = 'JagoBD Channel';
           }
         } else if (line.startsWith('http://') || line.startsWith('https://')) {
           if (currentChannelName) {
+            // অনেক সময় লিংকের সাথে পাইপ (|) দিয়ে রেফারার থাকে, তা ক্লিন করা
+            const cleanUrl = line.split('|')[0].trim();
             result.push({
               name: currentChannelName,
-              url: line
+              url: cleanUrl
             });
             currentChannelName = '';
           }
@@ -235,6 +242,7 @@
           document.querySelectorAll('.channel-btn').forEach(b => b.classList.remove('active'));
           btn.classList.add('active');
 
+          // ব্রাউজার লেভেলে JagoBD CORS ব্লক এড়াতে সোর্স লোড করা
           videoPlayer.src({
             src: channel.url,
             type: 'application/x-mpegURL'
@@ -244,12 +252,13 @@
           statusText.innerHTML = `Playing: <span style="color: var(--gold); font-weight:bold;">${channel.name}</span>`;
           
           if (typeof logUserActivity === 'function' && window.currentUser) {
-            logUserActivity(window.currentUser, 'watched_tv_channel', { channelName: channel.name });
+            logUserActivity(window.currentUser, 'watched_tv_channel', { channelName: channel.name, source: 'JagoBD' });
           }
         });
 
         gridContainer.appendChild(btn);
 
+        // প্রথম চ্যানেলটি ডিফল্ট হিসেবে সেট করা
         if (index === 0) {
           btn.classList.add('active');
           videoPlayer.src({
