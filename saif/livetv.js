@@ -1,5 +1,5 @@
 // ============================================================
-// SAIF ELITE LIVE TV – FIXED DIRECT PLAYER (NO PROXY BLOCK)
+// SAIF ELITE LIVE TV – EASY CORS BYPASS PLAYER
 // ============================================================
 (function () {
   function waitForDOM(cb) {
@@ -30,7 +30,7 @@
     const style = document.createElement('style');
     style.textContent = `
       .tv-container {
-        background: #111115; border-radius: 24px; padding: 24px;
+        background: #121214; border-radius: 24px; padding: 24px;
         border: 1px solid rgba(255, 215, 0, 0.12);
         box-shadow: 0 20px 40px rgba(0,0,0,0.7);
         max-width: 500px; width: 100%; color: #ffffff;
@@ -118,7 +118,7 @@
         <button class="tab-btn" data-cat="hot"><i class="fas fa-fire" style="color:#ff4500;"></i> Hot</button>
         <button class="tab-btn" data-cat="bd"><i class="fas fa-flag"></i> BD</button>
         <button class="tab-btn" data-cat="sports"><i class="fas fa-trophy"></i> Sports</button>
-        <button class="tab-bin" data-cat="news"><i class="fas fa-newspaper"></i> News</button>
+        <button class="tab-btn" data-cat="news"><i class="fas fa-newspaper"></i> News</button>
         <button class="tab-btn" data-cat="ent"><i class="fas fa-film"></i> Serials</button>
         <button class="tab-btn" data-cat="islamic"><i class="fas fa-mosque"></i> Islamic</button>
         <button class="tab-btn" data-cat="kids"><i class="fas fa-child"></i> Kids</button>
@@ -149,7 +149,6 @@
     }
 
     function createPlayer() {
-      // কাস্টম ব্লকিং হেডার বা এক্সটার্নাল প্রক্সি রিমুভ করে ক্লিন ইনিশিয়াল করা হয়েছে
       playerInstance = videojs('saif-tv-player', {
         fluid: true,
         autoplay: false,
@@ -158,14 +157,17 @@
       loadM3U();
     }
 
-    // সরাসরি সোর্স ইনজেকশন (কোনো ক্ষতিকারক কাস্টম প্রক্সি ছাড়া)
+    // 🔥 এখানে সহজভাবে অল্টারনেটিভ অল-অরিজিন প্রক্সি যুক্ত করা হয়েছে
     function setPlayerSource(url) {
       if (playerInstance) {
+        // একটি শক্তিশালী ওপেন সোর্স প্রক্সি যা ব্লকিং ভেঙে লিঙ্কটি পাস করবে
+        const bypassUrl = 'https://api.allorigins.win/raw?url=' + encodeURIComponent(url);
+        
         playerInstance.src({
-          src: url,
+          src: bypassUrl,
           type: 'application/x-mpegURL'
         });
-        playerInstance.play().catch(err => console.log('Autoplay prevented:', err));
+        playerInstance.play().catch(err => console.log('Autoplay handled:', err));
       }
     }
 
@@ -173,12 +175,12 @@
       const url = 'https://raw.githubusercontent.com/tabassumtanha127t-dot/Iptv/refs/heads/main/tv.m3u';
       try {
         const res = await fetch(url);
-        if (!res.ok) throw new Error('Network error');
+        if (!res.ok) throw new Error('M3U Load Failed');
         const text = await res.text();
         allChannels = parseM3U(text);
         filterAndRender();
       } catch (e) {
-        document.getElementById('tvChannelGrid').innerHTML = '<div style="grid-column:1/-1;text-align:center;color:#ff3333;">M3U fetch failed. Make sure repo is public.</div>';
+        document.getElementById('tvChannelGrid').innerHTML = '<div style="grid-column:1/-1;text-align:center;color:#ff3333;">Failed to load channels from GitHub.</div>';
       }
     }
 
@@ -242,7 +244,6 @@
         });
         grid.appendChild(btn);
         
-        // প্রথমবার অটো-লোড করার জন্য
         if (idx === 0 && currentCategory === 'all' && !document.getElementById('tvSearch').value) {
           btn.classList.add('active');
           setPlayerSource(ch.url);
